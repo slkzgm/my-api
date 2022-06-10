@@ -1,14 +1,8 @@
-const fs = require('fs');
 const express = require('express');
-const path = require('path');
-const {getDunk, getFloor, getLeft, getOpening, getRevealed, getSkinVials, getTarget, getDiff} = require("./lib/mnlth");
+const {getDunk, getFloor, getLeft, getOpening, getRevealed, getSkinVials, getTarget, getDiff,
+  getData
+} = require("./lib/mnlth");
 const app = express();
-
-const dataDirectory = path.join(process.cwd(), 'data');
-
-function getMnlthData() {
-  return JSON.parse(fs.readFileSync(dataDirectory + '/data.json'));
-}
 
 app.get('/', (req, res) => {
   const data = getMnlthData();
@@ -16,8 +10,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mnlth', (req, res) => {
-  const data = getMnlthData();
-  res.status(200).json(data);
+  res.status(201).json(getData());
 });
 
 app.get('/mnlth/diff', (req, res) => {
