@@ -1,8 +1,10 @@
 const express = require('express');
+const cors = require('cors');
 const {getDunk, getFloor, getLeft, getOpening, getRevealed, getSkinVials, getTarget, getDiff,
   getData
 } = require("./lib/mnlth");
 const app = express();
+app.use(cors);
 
 app.get('/', (req, res) => {
   res.send("GM WORLDDD!");
