@@ -5,7 +5,6 @@ const {getDunk, getFloor, getLeft, getOpening, getRevealed, getSkinVials, getTar
 const app = express();
 
 app.get('/', (req, res) => {
-  const data = getMnlthData();
   res.send("GM WORLDDD!" + data.mnlth.floorPrice);
 });
 
