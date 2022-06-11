@@ -3,6 +3,7 @@ const fs = require('fs');
 const { performance } = require('perf_hooks');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const path = require("path");
 
 const selectors = {
   box: {
@@ -301,9 +302,10 @@ const retrieveData = async () => {
 const updateJSON = async () => {
   const data = await retrieveData();
   const json = JSON.stringify(data);
+  const dataDirectory = path.join(process.cwd(), 'data');
   const filename = '/mnlthData.json';
 
-  fs.writeFile('./data' + filename, json, () => console.log(`${filename} updated.`));
+  fs.writeFile(dataDirectory + filename, json, () => console.log(`${filename} updated.`));
 }
 
 (async () => {
