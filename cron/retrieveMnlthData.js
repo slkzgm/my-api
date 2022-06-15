@@ -307,4 +307,6 @@ const updateJSON = async () => {
   fs.writeFile(dataDirectory + filename, json, () => console.log(`${filename} updated.`));
 }
 
-await updateJSON();
+(async () => {
+ await updateJSON();
+})();
