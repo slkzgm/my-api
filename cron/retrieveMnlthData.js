@@ -1,4 +1,3 @@
-const cron = require('node-cron');
 const fs = require('fs');
 const { performance } = require('perf_hooks');
 const puppeteer = require('puppeteer-extra');
@@ -308,9 +307,4 @@ const updateJSON = async () => {
   fs.writeFile(dataDirectory + filename, json, () => console.log(`${filename} updated.`));
 }
 
-(async () => {
-  await updateJSON();
-  cron.schedule('*/5 * * * *', async () => {
-    await updateJSON();
-  })
-})();
+await updateJSON();
