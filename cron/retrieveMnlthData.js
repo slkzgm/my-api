@@ -178,6 +178,7 @@ const retrieveMnlthData = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfkt-mnlth');
+    await page.screenshot({path: 'screenMnlth.png'});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
@@ -194,6 +195,7 @@ const retrieveMnlth2Data = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfktmonolith');
+    await page.screenshot({path: 'screenMnlth2.png'});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth2.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
@@ -212,6 +214,7 @@ const retrieveDunkGenesisData = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
+    await page.screenshot({path: 'screenDunk.png'});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     dunkGenesis.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     dunkGenesis.supply = await retrieveSupply(page);
@@ -242,6 +245,7 @@ const retrieveSkinVialData = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
+    await page.screenshot({path: 'screenVial.png'});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     skinVial.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     skinVial.supply = await retrieveSupply(page);
