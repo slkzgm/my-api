@@ -124,7 +124,7 @@ let skinVial = {
     },
   }
 };
-let timeout = 30000;
+let timeout = 100000;
 let errors = 0;
 
 const retrieveSupply = async (page) => {
