@@ -124,7 +124,7 @@ let skinVial = {
     },
   }
 };
-let timeout = 100000;
+let timeout = 30000;
 let errors = 0;
 
 const retrieveSupply = async (page) => {
@@ -198,7 +198,7 @@ const retrieveMnlth2Data = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    await page.setUserAgent('');
 
     await page.goto('https://opensea.io/collection/rtfktmonolith');
     await page.screenshot({path: 'screenMnlth2.png'});
