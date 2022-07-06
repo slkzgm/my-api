@@ -211,7 +211,7 @@ const retrieveMnlth2Data = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
     await page.goto('https://opensea.io/collection/rtfktmonolith');
     await sleep(timeout);
-    await page.screenshot({path: 'screenMnlth2.png'});
+    await page.screenshot({path: 'screenMnlth2_2.png'});
     console.log(`Error while trying to access MNLTH2 data: ${err}`);
     errors += 1;
   }
