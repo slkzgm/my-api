@@ -24,59 +24,6 @@ const selectors = {
   floorPrice: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1xf18x6-0.haVRLx > div > div.fresnel-container.fresnel-greaterThanOrEqual-md > div > div:nth-child(6) > a > div > span.sc-1xf18x6-0.sc-1w94ul3-0.haVRLx.bjsuxj.styledPhoenixText > div',
   noItems: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.gczeyg.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.bozbIq.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-ixw4tc-0.kyBdWA',
   supply: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.fresnel-container.fresnel-greaterThanOrEqual-md > div > p',
-}
-let dunkGenesis = {
-  floorPrice: 0,
-  supply: 0,
-  equippedSupply: 0,
-  traits: {
-    human: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    robot: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    demon: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    angel: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    reptile: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    undead: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    murakami: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-    alien: {
-      floorPrice: 0,
-      supply: 0,
-      supplyListed: 0
-    },
-  }
-};
-let mnlth = {
-  floorPrice: 0
-};
-let mnlth2 = {
-  floorPrice: 0
 };
 let skinVial = {
   floorPrice: 0,
@@ -127,6 +74,34 @@ let skinVial = {
 let timeout = 30000;
 let errors = 0;
 
+const testBypass1 = async (browser) => {
+  const collectionSlug = 'skinvial-evox';
+  const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
+  const page = await browser.newPage();
+  try {
+    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+
+    await page.goto(url);
+    await page.waitForSelector(selectors.floorPrice, {timeout});
+    console.log('1_OK');
+  } catch (err) {
+    console.log('1_ERROR');
+  }
+};
+const testBypass2 = async (browser) => {
+  const collectionSlug = 'skinvial-evox';
+  const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
+  const page = await browser.newPage();
+  try {
+    await page.goto(url);
+    await page.waitForSelector(selectors.floorPrice, {timeout});
+    console.log('2_OK');
+  } catch (err) {
+    console.log('2_ERROR');
+  }
+};
+
 const retrieveSupply = async (page) => {
   return await page.$eval(selectors.supply, e => parseInt(e.textContent
     .replace(" ", "")
@@ -148,14 +123,6 @@ const toClick = async (page, selector) => {
   }
 }
 
-const retrieveEquippedDunk = async (page) => {
-  try {
-    await toClick(page, selectors.box.vialBoxDunk);
-    await toClick(page, selectors.box.equippedBox);
-    dunkGenesis.equippedSupply = await retrieveSupply(page);
-  } catch (e) {console.log(e)}
-}
-
 const retrieveTraitsData = async (page, selector, data) => {
   try {
     await toClick(page, selector);
@@ -171,66 +138,10 @@ const retrieveTraitsData = async (page, selector, data) => {
   } catch (err) {console.log(`selector: ${selector} not found.`)}
 }
 
-const retrieveMnlthData = async (browser) => {
-  try {
-    const page = await browser.newPage();
-    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
-
-    await page.goto('https://opensea.io/collection/rtfkt-mnlth');
-    await page.waitForSelector(selectors.floorPrice, {timeout});
-    mnlth.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    page.close();
-  } catch (err) {
-    console.log(`Error while trying to access MNLTH data: ${err}`);
-    errors += 1;
-  }
-}
-
-const retrieveMnlth2Data = async (browser) => {
-  try {
-    const page = await browser.newPage();
-    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('');
-
-    await page.goto('https://opensea.io/collection/rtfktmonolith');
-    await page.waitForSelector(selectors.floorPrice, {timeout});
-    mnlth2.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    page.close();
-  } catch (err) {
-    console.log(`Error while trying to access MNLTH2 data: ${err}`);
-    errors += 1;
-  }
-}
-
-const retrieveDunkGenesisData = async (browser) => {
-  try {
-    const collectionSlug = 'rtfkt-nike-cryptokicks';
-    const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
-    const page = await browser.newPage();
-    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
-
-    await page.goto(url);
-    await page.waitForSelector(selectors.floorPrice, {timeout});
-    dunkGenesis.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    dunkGenesis.supply = await retrieveSupply(page);
-
-    await toClick(page, selectors.box.dnaBoxDunk);
-    await retrieveTraitsData(page, selectors.box.humanBox, dunkGenesis.traits.human);
-    await retrieveTraitsData(page, selectors.box.robotBox, dunkGenesis.traits.robot);
-    await retrieveTraitsData(page, selectors.box.demonBox, dunkGenesis.traits.demon);
-    await retrieveTraitsData(page, selectors.box.angelBox, dunkGenesis.traits.angel);
-    await retrieveTraitsData(page, selectors.box.reptileBox, dunkGenesis.traits.reptile);
-    await retrieveTraitsData(page, selectors.box.undeadBox, dunkGenesis.traits.undead);
-    await retrieveTraitsData(page, selectors.box.murakamiBox, dunkGenesis.traits.murakami);
-    await retrieveTraitsData(page, selectors.box.alienBox, dunkGenesis.traits.alien);
-    await retrieveEquippedDunk(page);
-    page.close();
-  } catch (err) {
-    console.log(`Error while trying to access Dunk Genesis data: ${err}`);
-    errors += 1;
-  }
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
 }
 
 const retrieveSkinVialData = async (browser) => {
@@ -271,45 +182,20 @@ const retrieveData = async () => {
       height: 800
     }
   });
-  let data = {};
+  // await retrieveSkinVialData(browser);
+  await testBypass1(browser);
+  await testBypass2(browser);
 
-  if (fs.existsSync('./commands/data.json'))
-    data = JSON.parse(fs.readFileSync('./commands/data.json'));
-  else
-    data.lastSuccessfullUpdate = 0;
-
-  errors = 0;
-  await Promise.all([
-    retrieveMnlthData(browser),
-    retrieveMnlth2Data(browser),
-    retrieveDunkGenesisData(browser),
-    retrieveSkinVialData(browser)
-  ]);
   await browser.close();
 
   console.log(performance.now() - start);
   return ({
-    mnlth,
-    mnlth2,
     skinVial,
-    dunkGenesis,
     lastUpdate: Date.now(),
     lastSuccessfullUpdate: errors >= 1 ? data.lastSuccessfullUpdate : Date.now()
   });
 }
 
-const updateJSON = async () => {
-  const data = await retrieveData();
-  const json = JSON.stringify(data);
-  const dataDirectory = path.join(process.cwd(), 'data');
-  const filename = '/mnlthData.json';
-
-  if (errors <= 1)
-    fs.writeFile(dataDirectory + filename, json, () => console.log(`${filename} updated.`));
-  else
-    console.log(`${filename} not updated.`);
-}
-
 (async () => {
- await updateJSON();
+  await retrieveData();
 })();
