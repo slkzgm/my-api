@@ -124,7 +124,7 @@ let skinVial = {
     },
   }
 };
-let timeout = 30000;
+let timeout = 5000;
 let errors = 0;
 
 const retrieveSupply = async (page) => {
@@ -182,7 +182,7 @@ const retrieveMnlthData = async (browser) => {
     mnlth.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
   } catch (err) {
-    console.log('Error while trying to access MNLTH data.')
+    console.log(`Error while trying to access MNLTH data: ${err}`);
     errors += 1;
   }
 }
@@ -198,7 +198,7 @@ const retrieveMnlth2Data = async (browser) => {
     mnlth2.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
   } catch (err) {
-    console.log('Error while trying to access MNLTH2 data.')
+    console.log(`Error while trying to access MNLTH2 data: ${err}`);
     errors += 1;
   }
 }
@@ -228,7 +228,7 @@ const retrieveDunkGenesisData = async (browser) => {
     await retrieveEquippedDunk(page);
     page.close();
   } catch (err) {
-    console.log('Error while trying to access Dunk Genesis data.');
+    console.log(`Error while trying to access Dunk Genesis data: ${err}`);
     errors += 1;
   }
 }
@@ -256,7 +256,7 @@ const retrieveSkinVialData = async (browser) => {
     await retrieveTraitsData(page, selectors.box.alienBox, skinVial.traits.alien);
     page.close();
   } catch (err) {
-    console.log('Error while trying to access Skin Vials data.');
+    console.log(`Error while trying to access Skin Vials data: ${err}`);
     errors += 1;
   }
 }
