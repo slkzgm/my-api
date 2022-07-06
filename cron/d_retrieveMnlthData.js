@@ -1,8 +1,6 @@
-const fs = require('fs');
 const { performance } = require('perf_hooks');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const path = require("path");
 
 const selectors = {
   box: {
@@ -94,7 +92,9 @@ const testBypass2 = async (browser) => {
   const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
   const page = await browser.newPage();
   try {
-    await page.goto(url);
+    await page.goto(url, { waitUntil: 'networkidle0' });
+    const bodyHTML = await page.evaluate(() => document.body.innerHTML);
+    console.log(bodyHTML);
     await page.waitForSelector(selectors.floorPrice, {timeout});
     console.log('2_OK');
   } catch (err) {
