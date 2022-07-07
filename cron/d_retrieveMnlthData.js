@@ -79,7 +79,6 @@ const testBypass1 = async (browser) => {
   try {
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
-    await page.setJavaScriptEnabled(true);
 
     await page.goto(url);
     await page.waitForSelector(selectors.floorPrice, {timeout});
@@ -100,6 +99,21 @@ const testBypass2 = async (browser) => {
     console.log('2_OK');
   } catch (err) {
     console.log('2_ERROR');
+  }
+};
+
+const testBypass3 = async (browser) => {
+  const url = 'https://bot.sannysoft.com/';
+  const page = await browser.newPage();
+  try {
+    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+
+    await page.goto(url);
+    await page.screenshot({path: './botTest.png', fullPage: true});
+    console.log('1_OK');
+  } catch (err) {
+    console.log('1_ERROR');
   }
 };
 
@@ -186,6 +200,7 @@ const retrieveData = async () => {
   // await retrieveSkinVialData(browser);
   await testBypass1(browser);
   await testBypass2(browser);
+  await testBypass3(browser);
 
   await browser.close();
 
