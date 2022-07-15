@@ -20,9 +20,10 @@ const selectors = {
     alienBox: '#ALIEN'
   },
   buyNow: '#Buy_Now > div > span > input',
-  firstListingPrice: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-1xf18x6-0.haVRLx.AssetsSearchView--assets > div.fresnel-container.fresnel-greaterThanOrEqual-sm > div > div > div:nth-child(1) > div > article > a > div.sc-1xf18x6-0.sc-nedjig-0.hocRfR.hROcFU > div.sc-1xf18x6-0.sc-1twd32i-0.sc-1wwz3hp-0.xGokL.kKpYwv.kuGBEl > div > div > div.sc-1a9c68u-0.jdhmum.Price--main.sc-1rzu7xl-0.eYVhXE > div.sc-7qr9y8-0.iUvoJs.Price--amount',
+  firstItem: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-1xf18x6-0.haVRLx.AssetsSearchView--assets > div.fresnel-container.fresnel-greaterThanOrEqual-sm > div > div > div:nth-child(1) > div > article > a > div.sc-1xf18x6-0.sc-dw611d-0.hocRfR.bhhGea',
+  firstListingPrice: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-1xf18x6-0.haVRLx.AssetsSearchView--assets > div.fresnel-container.fresnel-greaterThanOrEqual-sm > div > div > div:nth-child(1) > div > article > a > div.sc-1xf18x6-0.sc-dw611d-0.hocRfR.bhhGea > div.sc-1xf18x6-0.sc-1twd32i-0.sc-1wwz3hp-0.xGokL.kKpYwv.kuGBEl > div > div > div.sc-1a9c68u-0.jdhmum.Price--main.sc-1rzu7xl-0.eYVhXE > div.sc-7qr9y8-0.iUvoJs.Price--amount',
   floorPrice: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1xf18x6-0.haVRLx > div > div.fresnel-container.fresnel-greaterThanOrEqual-md > div > div:nth-child(6) > a > div > span.sc-1xf18x6-0.sc-1w94ul3-0.haVRLx.bjsuxj.styledPhoenixText > div',
-  noItems: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.gczeyg.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.bozbIq.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-ixw4tc-0.kyBdWA',
+  noItems: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-ixw4tc-0.kyBdWA',
   supply: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.fresnel-container.fresnel-greaterThanOrEqual-md > div > p',
 }
 let dunkGenesis = {
@@ -141,7 +142,7 @@ const retrieveFirstListingPrice = async (page) => {
 const toClick = async (page, selector) => {
   try {
     await page.click(selector);
-    await page.waitForSelector(selectors.firstListingPrice, {timeout});
+    await page.waitForSelector(selectors.firstItem, {timeout});
   } catch (e) {
     console.log(`First listing not found for ${selector} on ${page.url()} check for "no items"`);
     await page.waitForSelector(selectors.noItems, {timeout: 10000});
@@ -178,6 +179,7 @@ const retrieveMnlthData = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfkt-mnlth');
+    // await page.screenshot({path: 'debugMnlth.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
@@ -191,9 +193,10 @@ const retrieveMnlth2Data = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('');
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfktmonolith');
+    // await page.screenshot({path: 'debugMnlth2.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth2.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
@@ -212,6 +215,7 @@ const retrieveDunkGenesisData = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
+    // await page.screenshot({path: 'debugDunk.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     dunkGenesis.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     dunkGenesis.supply = await retrieveSupply(page);
@@ -228,6 +232,7 @@ const retrieveDunkGenesisData = async (browser) => {
     await retrieveEquippedDunk(page);
     page.close();
   } catch (err) {
+    // console.log(err);
     console.log(`Error while trying to access Dunk Genesis data: ${err}`);
     errors += 1;
   }
@@ -242,6 +247,7 @@ const retrieveSkinVialData = async (browser) => {
     await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
+    // await page.screenshot({path: 'debugVial.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     skinVial.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     skinVial.supply = await retrieveSupply(page);
@@ -256,6 +262,7 @@ const retrieveSkinVialData = async (browser) => {
     await retrieveTraitsData(page, selectors.box.alienBox, skinVial.traits.alien);
     page.close();
   } catch (err) {
+    // console.log(err);
     console.log(`Error while trying to access Skin Vials data: ${err}`);
     errors += 1;
   }
@@ -286,7 +293,6 @@ const retrieveData = async () => {
     retrieveSkinVialData(browser)
   ]);
   await browser.close();
-
   console.log(performance.now() - start);
   return ({
     mnlth,
