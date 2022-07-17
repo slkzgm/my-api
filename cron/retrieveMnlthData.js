@@ -1,8 +1,8 @@
 const fs = require('fs');
 const { performance } = require('perf_hooks');
 const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const path = require("path");
+const stealth = require('puppeteer-extra-plugin-stealth')();
 
 const selectors = {
   box: {
@@ -176,7 +176,7 @@ const retrieveMnlthData = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfkt-mnlth');
     // await page.screenshot({path: 'debugMnlth.png', fullPage: true});
@@ -193,7 +193,7 @@ const retrieveMnlth2Data = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfktmonolith');
     // await page.screenshot({path: 'debugMnlth2.png', fullPage: true});
@@ -212,7 +212,7 @@ const retrieveDunkGenesisData = async (browser) => {
     const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
     // await page.screenshot({path: 'debugDunk.png', fullPage: true});
@@ -244,7 +244,7 @@ const retrieveSkinVialData = async (browser) => {
     const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
     // await page.screenshot({path: 'debugVial.png', fullPage: true});
@@ -270,13 +270,14 @@ const retrieveSkinVialData = async (browser) => {
 
 const retrieveData = async () => {
   const start = performance.now();
-  puppeteer.use(StealthPlugin());
+  stealth.enabledEvasions.clear()
+  stealth.enabledEvasions.add("navigator.webdriver")
+  stealth.enabledEvasions.add("defaultArgs")
+  stealth.enabledEvasions.add("sourceurl")
+  stealth.enabledEvasions.add("user-agent-override")
+  puppeteer.use(stealth);
   const browser = await puppeteer.launch({
-    headless: true,
-    defaultViewport: {
-      width: 1200,
-      height: 800
-    }
+    headless: true
   });
   let data = {};
 

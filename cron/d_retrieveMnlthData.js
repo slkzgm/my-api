@@ -1,6 +1,7 @@
 const { performance } = require('perf_hooks');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const stealth = StealthPlugin();
 
 const selectors = {
   box: {
@@ -93,6 +94,7 @@ const testBypass2 = async (browser) => {
   const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
   const page = await browser.newPage();
   try {
+    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
     await page.goto(url, { waitUntil: 'networkidle0' });
     const bodyHTML = await page.evaluate(() => document.body.innerHTML);
     await page.waitForSelector(selectors.floorPrice, {timeout});
@@ -189,13 +191,15 @@ const retrieveSkinVialData = async (browser) => {
 
 const retrieveData = async () => {
   const start = performance.now();
-  puppeteer.use(StealthPlugin());
+  stealth.enabledEvasions.clear()
+  stealth.enabledEvasions.add("navigator.webdriver")
+  stealth.enabledEvasions.add("defaultArgs")
+  stealth.enabledEvasions.add("sourceurl")
+  stealth.enabledEvasions.add("user-agent-override")
+  puppeteer.use(stealth);
   const browser = await puppeteer.launch({
     headless: true,
-    defaultViewport: {
-      width: 1200,
-      height: 800
-    }
+    defaultViewport: null
   });
   // await retrieveSkinVialData(browser);
   await testBypass1(browser);
