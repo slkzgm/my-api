@@ -80,13 +80,14 @@ const testBypass1 = async (browser) => {
   const page = await browser.newPage();
   try {
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto(url);
     await page.waitForSelector(selectors.floorPrice, {timeout});
-    console.log('1_OK');
+    console.log('1_UA_OK');
   } catch (err) {
-    console.log('1_ERROR');
+    console.log('1_UA_ERROR');
   }
 };
 const testBypass2 = async (browser) => {
@@ -98,9 +99,9 @@ const testBypass2 = async (browser) => {
     await page.goto(url, { waitUntil: 'networkidle0' });
     const bodyHTML = await page.evaluate(() => document.body.innerHTML);
     await page.waitForSelector(selectors.floorPrice, {timeout});
-    console.log('2_OK');
+    console.log('2_WUA_OK');
   } catch (err) {
-    console.log('2_ERROR');
+    console.log('2_WUA_ERROR');
   }
 };
 
@@ -109,13 +110,14 @@ const testBypass3 = async (browser) => {
   const page = await browser.newPage();
   try {
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
+    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto(url);
     await page.screenshot({path: './botTest.png', fullPage: true});
-    console.log('3_OK');
+    console.log('3_SANNYSOFT_OK');
   } catch (err) {
-    console.log('3_ERROR');
+    console.log('3_SANNTSOFT_ERROR');
   }
 };
 
