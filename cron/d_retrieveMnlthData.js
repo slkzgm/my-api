@@ -74,7 +74,12 @@ let skinVial = {
 let timeout = 30000;
 let errors = 0;
 
-const testBypass1 = async (browser) => {
+const testBypass1 = async () => {
+  puppeteer.use(stealth);
+  const browser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+  });
   const collectionSlug = 'skinvial-evox';
   const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
   const page = await browser.newPage();
@@ -90,7 +95,12 @@ const testBypass1 = async (browser) => {
     console.log('1_UA_ERROR');
   }
 };
-const testBypass2 = async (browser) => {
+const testBypass2 = async () => {
+  puppeteer.use(stealth);
+  const browser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+  });
   const collectionSlug = 'skinvial-evox';
   const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
   const page = await browser.newPage();
@@ -105,7 +115,12 @@ const testBypass2 = async (browser) => {
   }
 };
 
-const testBypass3 = async (browser) => {
+const testBypass3 = async () => {
+  puppeteer.use(stealth);
+  const browser = await puppeteer.launch({
+    headless: true,
+    defaultViewport: null,
+  });
   const url = 'https://bot.sannysoft.com/';
   const page = await browser.newPage();
   try {
@@ -126,16 +141,16 @@ const testBypass4 = async () => {
     const proxy = '127.0.0.1:24000';
     puppeteer.use(stealth);
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       defaultViewport: null,
       args: [`--proxy-server=${proxy}`]
     });
     const page = await browser.newPage();
 
     await page.goto('https://monip.io/');
+    await page.screenshot({path: 'bypass4.png', fullPage: true});
     const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
-    console.log(ip);
-    console.log('PROXY OK');
+    console.log(`PROXY OK: ${ip}`);
   } catch (e) {
     console.log(e);
   }
@@ -145,15 +160,15 @@ const testBypass5 = async () => {
   try {
     puppeteer.use(stealth);
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       defaultViewport: null,
     });
     const page = await browser.newPage();
 
     await page.goto('https://monip.io/');
+    await page.screenshot({path: 'bypass5.png', fullPage: true});
     const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
-    console.log(ip);
-    console.log('NO PROXY OK');
+    console.log(`NO PROXY OK: ${ip}`);
   } catch (e) {
     console.log(e);
   }
@@ -239,9 +254,9 @@ const retrieveData = async () => {
   //   args: [`--proxy-server=${proxy}`]
   // });
   // await retrieveSkinVialData(browser);
-  // await testBypass1(browser);
-  // await testBypass2(browser);
-  // await testBypass3(browser);
+  await testBypass1();
+  await testBypass2();
+  await testBypass3();
   await testBypass4();
   await testBypass5();
 
