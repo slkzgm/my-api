@@ -176,10 +176,8 @@ const retrieveMnlthData = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfkt-mnlth');
-    // await page.screenshot({path: 'debugMnlth.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
@@ -193,10 +191,8 @@ const retrieveMnlth2Data = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto('https://opensea.io/collection/rtfktmonolith');
-    // await page.screenshot({path: 'debugMnlth2.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth2.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     page.close();
@@ -212,7 +208,6 @@ const retrieveDunkGenesisData = async (browser) => {
     const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
     // await page.screenshot({path: 'debugDunk.png', fullPage: true});
@@ -244,10 +239,8 @@ const retrieveSkinVialData = async (browser) => {
     const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
 
     await page.goto(url);
-    // await page.screenshot({path: 'debugVial.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     skinVial.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     skinVial.supply = await retrieveSupply(page);
@@ -270,14 +263,13 @@ const retrieveSkinVialData = async (browser) => {
 
 const retrieveData = async () => {
   const start = performance.now();
-  stealth.enabledEvasions.clear()
-  stealth.enabledEvasions.add("navigator.webdriver")
-  stealth.enabledEvasions.add("defaultArgs")
-  stealth.enabledEvasions.add("sourceurl")
-  stealth.enabledEvasions.add("user-agent-override")
   puppeteer.use(stealth);
   const browser = await puppeteer.launch({
-    headless: true
+    headless: true,
+    defaultViewport: {
+      width: 1200,
+      height: 800
+    }
   });
   let data = {};
 
