@@ -137,7 +137,7 @@ const testBypass4 = async () => {
     console.log(ip);
     console.log('PROXY OK');
   } catch (e) {
-    console.log('PROXY ERROR');
+    console.log(e);
   }
 };
 
@@ -155,7 +155,7 @@ const testBypass5 = async () => {
     console.log(ip);
     console.log('NO PROXY OK');
   } catch (e) {
-    console.log('NO PROXY ERROR');
+    console.log(e);
   }
 };
 
