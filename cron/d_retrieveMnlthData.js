@@ -111,7 +111,7 @@ const testBypass3 = async (browser) => {
   try {
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
     // await page.setUserAgent('Mozilla/5.0 (Windows NT 5.1; rv:5.0) Gecko/20100101 Firefox/5.0');
-    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
+    // await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto(url);
     await page.screenshot({path: './botTest.png', fullPage: true});
@@ -119,6 +119,16 @@ const testBypass3 = async (browser) => {
   } catch (err) {
     console.log('3_SANNTSOFT_ERROR');
   }
+};
+
+const testBypass4 = async (browser) => {
+  const page = await browser.newPage();
+
+  await page.goto('https://monip.io/');
+  await page.screenshot({path: 'proxyTest.png', fullPage: true})
+  const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
+  console.log(ip);
+  console.log('PROXY OK');
 };
 
 const retrieveSupply = async (page) => {
@@ -193,22 +203,20 @@ const retrieveSkinVialData = async (browser) => {
 
 const retrieveData = async () => {
   const start = performance.now();
-  stealth.enabledEvasions.clear()
-  stealth.enabledEvasions.add("navigator.webdriver")
-  stealth.enabledEvasions.add("defaultArgs")
-  stealth.enabledEvasions.add("sourceurl")
-  stealth.enabledEvasions.add("user-agent-override")
+  const proxy = '127.0.0.1:24000';
   puppeteer.use(stealth);
   const browser = await puppeteer.launch({
-    headless: true,
-    defaultViewport: null
+    headless: false,
+    defaultViewport: null,
+    args: [`--proxy-server=${proxy}`]
   });
   // await retrieveSkinVialData(browser);
-  await testBypass1(browser);
-  await testBypass2(browser);
-  await testBypass3(browser);
+  // await testBypass1(browser);
+  // await testBypass2(browser);
+  // await testBypass3(browser);
+  await testBypass4(browser);
 
-  await browser.close();
+  // await browser.close();
 
   console.log(performance.now() - start);
   return ({
