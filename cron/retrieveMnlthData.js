@@ -180,7 +180,7 @@ const retrieveMnlthData = async (browser) => {
     await page.goto('https://opensea.io/collection/rtfkt-mnlth');
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    page.close();
+    await page.close();
   } catch (err) {
     console.log(`Error while trying to access MNLTH data: ${err}`);
     errors += 1;
@@ -195,7 +195,7 @@ const retrieveMnlth2Data = async (browser) => {
     await page.goto('https://opensea.io/collection/rtfktmonolith');
     await page.waitForSelector(selectors.floorPrice, {timeout});
     mnlth2.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    page.close();
+    await page.close();
   } catch (err) {
     console.log(`Error while trying to access MNLTH2 data: ${err}`);
     errors += 1;
@@ -210,7 +210,6 @@ const retrieveDunkGenesisData = async (browser) => {
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
 
     await page.goto(url);
-    // await page.screenshot({path: 'debugDunk.png', fullPage: true});
     await page.waitForSelector(selectors.floorPrice, {timeout});
     dunkGenesis.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
     dunkGenesis.supply = await retrieveSupply(page);
@@ -225,7 +224,7 @@ const retrieveDunkGenesisData = async (browser) => {
     await retrieveTraitsData(page, selectors.box.murakamiBox, dunkGenesis.traits.murakami);
     await retrieveTraitsData(page, selectors.box.alienBox, dunkGenesis.traits.alien);
     await retrieveEquippedDunk(page);
-    page.close();
+    await page.close();
   } catch (err) {
     // console.log(err);
     console.log(`Error while trying to access Dunk Genesis data: ${err}`);
@@ -253,7 +252,7 @@ const retrieveSkinVialData = async (browser) => {
     await retrieveTraitsData(page, selectors.box.undeadBox, skinVial.traits.undead);
     await retrieveTraitsData(page, selectors.box.murakamiBox, skinVial.traits.murakami);
     await retrieveTraitsData(page, selectors.box.alienBox, skinVial.traits.alien);
-    page.close();
+    await page.close();
   } catch (err) {
     // console.log(err);
     console.log(`Error while trying to access Skin Vials data: ${err}`);
@@ -269,8 +268,18 @@ const retrieveData = async () => {
     defaultViewport: {
       width: 1200,
       height: 800
-    }
+    },
+    args: ['--proxy-server=zproxy.lum-superproxy.io:22225']
   });
+  const page = await browser.newPage();
+  await page.authenticate({
+    username: 'lum-customer-hl_9743e7ee-zone-my_zone-country-us',
+    password: 'w648wbbr4vdt'
+  });
+  await page.goto('https://monip.io/');
+  const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
+  await page.close();
+  console.log(`Script started using ${ip}...`);
   let data = {};
 
   if (fs.existsSync('./commands/data.json'))
