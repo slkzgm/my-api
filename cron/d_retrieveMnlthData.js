@@ -129,7 +129,6 @@ const testBypass3 = async () => {
     // await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto(url);
-    await page.screenshot({path: './botTest.png', fullPage: true});
     console.log('3_SANNYSOFT_OK');
   } catch (err) {
     console.log('3_SANNTSOFT_ERROR');
@@ -148,7 +147,6 @@ const testBypass4 = async () => {
     const page = await browser.newPage();
 
     await page.goto('https://monip.io/');
-    await page.screenshot({path: 'bypass4.png', fullPage: true});
     const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
     console.log(`PROXY OK: ${ip}`);
   } catch (e) {
@@ -166,9 +164,31 @@ const testBypass5 = async () => {
     const page = await browser.newPage();
 
     await page.goto('https://monip.io/');
-    await page.screenshot({path: 'bypass5.png', fullPage: true});
     const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
     console.log(`NO PROXY OK: ${ip}`);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const testBypass6 = async () => {
+  try {
+    puppeteer.use(stealth);
+    const browser = await puppeteer.launch({
+      headless: true,
+      defaultViewport: null,
+      args: ['--proxy-server=zproxy.lum-superproxy.io:22225']
+    });
+    const page = await browser.newPage();
+    await page.authenticate({
+      // username: 'lum-customer-USERNAME-zone-YOURZONE',
+      username: 'lum-customer-hl_9743e7ee-zone-my_zone-country-us',
+      password: 'w648wbbr4vdt'
+    });
+
+    await page.goto('https://monip.io/');
+    const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
+    console.log(`SUPERPROXY OK: ${ip}`);
   } catch (e) {
     console.log(e);
   }
@@ -254,11 +274,12 @@ const retrieveData = async () => {
   //   args: [`--proxy-server=${proxy}`]
   // });
   // await retrieveSkinVialData(browser);
-  await testBypass1();
-  await testBypass2();
-  await testBypass3();
-  await testBypass4();
-  await testBypass5();
+  // await testBypass1();
+  // await testBypass2();
+  // await testBypass3();
+  // await testBypass4();
+  // await testBypass5();
+  await testBypass6();
 
   // await browser.close();
 
