@@ -121,14 +121,42 @@ const testBypass3 = async (browser) => {
   }
 };
 
-const testBypass4 = async (browser) => {
-  const page = await browser.newPage();
+const testBypass4 = async () => {
+  try {
+    const proxy = '127.0.0.1:24000';
+    puppeteer.use(stealth);
+    const browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null,
+      args: [`--proxy-server=${proxy}`]
+    });
+    const page = await browser.newPage();
 
-  await page.goto('https://monip.io/');
-  await page.screenshot({path: 'proxyTest.png', fullPage: true})
-  const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
-  console.log(ip);
-  console.log('PROXY OK');
+    await page.goto('https://monip.io/');
+    const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
+    console.log(ip);
+    console.log('PROXY OK');
+  } catch (e) {
+    console.log('PROXY ERROR');
+  }
+};
+
+const testBypass5 = async () => {
+  try {
+    puppeteer.use(stealth);
+    const browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null,
+    });
+    const page = await browser.newPage();
+
+    await page.goto('https://monip.io/');
+    const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
+    console.log(ip);
+    console.log('NO PROXY OK');
+  } catch (e) {
+    console.log('NO PROXY ERROR');
+  }
 };
 
 const retrieveSupply = async (page) => {
@@ -203,18 +231,19 @@ const retrieveSkinVialData = async (browser) => {
 
 const retrieveData = async () => {
   const start = performance.now();
-  const proxy = '127.0.0.1:24000';
-  puppeteer.use(stealth);
-  const browser = await puppeteer.launch({
-    headless: false,
-    defaultViewport: null,
-    args: [`--proxy-server=${proxy}`]
-  });
+  // const proxy = '127.0.0.1:24000';
+  // puppeteer.use(stealth);
+  // const browser = await puppeteer.launch({
+  //   headless: false,
+  //   defaultViewport: null,
+  //   args: [`--proxy-server=${proxy}`]
+  // });
   // await retrieveSkinVialData(browser);
   // await testBypass1(browser);
   // await testBypass2(browser);
   // await testBypass3(browser);
-  await testBypass4(browser);
+  await testBypass4();
+  await testBypass5();
 
   // await browser.close();
 
