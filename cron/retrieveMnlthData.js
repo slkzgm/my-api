@@ -125,7 +125,7 @@ let skinVial = {
     },
   }
 };
-const timeout = 30000;
+const timeout = 15000;
 let errors = 0;
 
 const retrieveSupply = async (page) => {
@@ -176,6 +176,7 @@ const retrieveMnlthData = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
+    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto('https://opensea.io/collection/rtfkt-mnlth');
     await page.waitForSelector(selectors.floorPrice, {timeout});
@@ -191,6 +192,7 @@ const retrieveMnlth2Data = async (browser) => {
   try {
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
+    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto('https://opensea.io/collection/rtfktmonolith');
     await page.waitForSelector(selectors.floorPrice, {timeout});
@@ -239,6 +241,7 @@ const retrieveSkinVialData = async (browser) => {
     const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
     const page = await browser.newPage();
     await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
+    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
 
     await page.goto(url);
     await page.waitForSelector(selectors.floorPrice, {timeout});
@@ -315,8 +318,11 @@ const updateJSON = async () => {
 
   if (errors <= 1)
     fs.writeFile(dataDirectory + filename, json, () => console.log(`${filename} updated.`));
-  else
+  else {
     console.log(`${filename} not updated.`);
+    console.log('Trying one more time');
+    await updateJSON();
+  }
 }
 
 (async () => {
