@@ -1,8 +1,7 @@
 const express = require('express');
 const cors = require('cors');
-const {getDunk, getFloor, getLeft, getOpening, getRevealed, getSkinVials, getTarget, getDiff,
-  getData
-} = require("./lib/mnlth");
+const mnlthLib = require("./lib/mnlth");
+const mintVialLib = require("./lib/mintVial");
 const app = express();
 app.use(cors());
 
@@ -11,39 +10,67 @@ app.get('/', (req, res) => {
 });
 
 app.get('/mnlth', (req, res) => {
-  res.status(201).json(getData());
+  res.status(201).json(mnlthLib.getData());
 });
 
 app.get('/mnlth/diff', (req, res) => {
-  res.status(200).json(getDiff());
+  res.status(200).json(mnlthLib.getDiff());
 });
 
 app.get('/mnlth/dunk', (req, res) => {
-  res.status(200).json(getDunk());
+  res.status(200).json(mnlthLib.getDunk());
 });
 
 app.get('/mnlth/floor', (req, res) => {
-  res.status(200).json(getFloor());
+  res.status(200).json(mnlthLib.getFloor());
 });
 
 app.get('/mnlth/left', (req, res) => {
-  res.status(200).json(getLeft());
+  res.status(200).json(mnlthLib.getLeft());
 });
 
 app.get('/mnlth/opening', (req, res) => {
-  res.status(200).json(getOpening());
+  res.status(200).json(mnlthLib.getOpening());
 });
 
 app.get('/mnlth/revealed', (req, res) => {
-  res.status(200).json(getRevealed());
+  res.status(200).json(mnlthLib.getRevealed());
 });
 
 app.get('/mnlth/skinvials', (req, res) => {
-  res.status(200).json(getSkinVials());
+  res.status(200).json(mnlthLib.getSkinVials());
 });
 
 app.get('/mnlth/target', (req, res) => {
-  res.status(200).json(getTarget());
+  res.status(200).json(mnlthLib.getTarget());
+});
+
+app.get('/mintVial', (req, res) => {
+  res.status(201).json(mintVialLib.getData());
+});
+
+app.get('/mintVial/diff', (req, res) => {
+  res.status(200).json(mintVialLib.getDiff());
+});
+
+app.get('/mintVial/floor', (req, res) => {
+  res.status(200).json(mintVialLib.getFloor());
+});
+
+app.get('/mintVial/left', (req, res) => {
+  res.status(200).json(mintVialLib.getLeft());
+});
+
+app.get('/mintVial/opening', (req, res) => {
+  res.status(200).json(mintVialLib.getOpening());
+});
+
+app.get('/mintVial/revealed', (req, res) => {
+  res.status(200).json(mintVialLib.getRevealed());
+});
+
+app.get('/mintVial/target', (req, res) => {
+  res.status(200).json(mintVialLib.getTarget());
 });
 
 const port = 3000;
