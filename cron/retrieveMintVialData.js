@@ -1,28 +1,7 @@
 const fs = require('fs');
 const { performance } = require('perf_hooks');
-const puppeteer = require('puppeteer-extra');
 const path = require("path");
-const stealth = require('puppeteer-extra-plugin-stealth')();
-
-const selectors = {
-  box: {
-    dnaBoxVial: '#Header\\ trait-filter-DNA',
-    humanBox: '#Human',
-    robotBox: '#Robot',
-    demonBox: '#Demon',
-    angelBox: '#Angel',
-    reptileBox: '#Reptile',
-    undeadBox: '#Undead',
-    murakamiBox: '#Murakami',
-    alienBox: '#Alien'
-  },
-  buyNow: '#Buy_Now > div > span > input',
-  firstItem: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-1xf18x6-0.haVRLx.AssetsSearchView--assets > div.fresnel-container.fresnel-greaterThanOrEqual-sm > div > div > div:nth-child(1) > div > article > a > div.sc-1xf18x6-0.sc-dw611d-0.hocRfR.bhhGea',
-  firstListingPrice: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-1xf18x6-0.haVRLx.AssetsSearchView--assets > div.fresnel-container.fresnel-greaterThanOrEqual-sm > div > div > div:nth-child(1) > div > article > a > div.sc-1xf18x6-0.sc-dw611d-0.hocRfR.bhhGea > div.sc-1xf18x6-0.sc-1twd32i-0.sc-1wwz3hp-0.xGokL.kKpYwv.kuGBEl > div > div > div.sc-1a9c68u-0.jdhmum.Price--main.sc-1rzu7xl-0.eYVhXE > div.sc-7qr9y8-0.iUvoJs.Price--amount',
-  floorPrice: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1xf18x6-0.haVRLx > div > div.fresnel-container.fresnel-greaterThanOrEqual-md > div > div:nth-child(8) > a > div > span.sc-1xf18x6-0.sc-1w94ul3-0.haVRLx.bjsuxj.styledPhoenixText > div',
-  noItems: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.sc-ixw4tc-0.kyBdWA',
-  supply: '#main > div > div > div.sc-1xf18x6-0.sc-z0wxa3-0.hnKAL.hWJuuu > div > div.sc-1po1rbf-6.bUKivE > div.sc-1xf18x6-0.cPWSa-d.AssetSearchView--main > div.AssetSearchView--results.collection--results.AssetSearchView--results--phoenix > div.fresnel-container.fresnel-greaterThanOrEqual-md > div > p',
-};
+const axios = require("axios");
 
 let cloneX = {
   floorPrice: 0,
@@ -73,145 +52,79 @@ let cloneX = {
 let mintVial = {
   floorPrice: 0
 };
-const timeout = 15000;
-let errors = 0;
 
-const retrieveSupply = async (page) => {
-  return await page.$eval(selectors.supply, e => parseInt(e.textContent
-    .replace(" ", "")
-    .replace(",", ""))
-  );
-}
+const retrieveCollectionStats = async (collectionContract) => (await axios.get(
+    `https://api.reservoir.tools/collection/v3?id=${collectionContract}`,
+    {
+      headers: {
+        Accept: '*/*',
+        body: JSON.stringify({collection: '0xf661d58cfe893993b11d53d11148c4650590c692'})
+      }})
+).data.collection;
 
-const retrieveFirstListingPrice = async (page) => {
-  return await page.$eval(selectors.firstListingPrice, e => parseFloat(e.textContent));
-}
+const retrieveCollectionAttributes = async (collectionContract) => (await axios.get(
+    `https://api.reservoir.tools/collections/${collectionContract}/attributes/explore/v3?limit=5000`,
+    {
+      headers: {
+        Accept: '*/*',
+        body: JSON.stringify({collection: '0xf661d58cfe893993b11d53d11148c4650590c692'})
+      }})
+).data.attributes;
 
-const toClick = async (page, selector) => {
-  try {
-    await page.click(selector);
-    await page.waitForSelector(selectors.firstItem, {timeout});
-  } catch (e) {
-    console.log(`First listing not found for ${selector} on ${page.url()} check for "no items"`);
-    await page.waitForSelector(selectors.noItems, {timeout: 10000});
+const retrieveSupplyPerAttributes = async (collectionSlug) => (await axios.get(
+    `https://api.opensea.io/api/v1/collection/${collectionSlug}`)
+).data.collection.traits['DNA'];
+
+const retrieveCollectionData = async (collectionContract, collectionSlug, data) => {
+  const stats = await retrieveCollectionStats(collectionContract);
+  const attributes = await retrieveCollectionAttributes(collectionContract);
+  const dnaAttr = attributes.filter(attr => attr.key === 'DNA');
+  const supplyPerAttributes = await retrieveSupplyPerAttributes(collectionSlug);
+
+  data.floorPrice = stats.floorAsk.price;
+  if (collectionSlug === 'clonex') {
+    data.supply = parseInt(stats.tokenCount);
+    Object.keys(supplyPerAttributes).map(dna => {
+      const attrData = dnaAttr.filter(attr => attr.value.toLowerCase() === dna)[0];
+
+      data.traits[dna] = {
+        floorPrice: attrData ? attrData.floorAskPrices[0] : 0,
+        supply: supplyPerAttributes[dna],
+        supplyListed: attrData ? attrData.onSaleCount : 0
+      }
+    });
   }
-}
 
-const retrieveTraitsData = async (page, selector, data) => {
-  try {
-    await toClick(page, selector);
-    data.supply = await retrieveSupply(page);
-    await toClick(page, selectors.buyNow);
-    data.supplyListed = await retrieveSupply(page);
-    if (data.supplyListed > 0)
-      data.floorPrice = await retrieveFirstListingPrice(page);
-    else
-      data.floorPrice = 0;
-    await toClick(page, selector);
-    await toClick(page, selectors.buyNow);
-  } catch (err) {console.log(`selector: ${selector} not found.`)}
-}
-
-const retrieveMintVialData = async (browser) => {
-  try {
-    const page = await browser.newPage();
-    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
-
-    await page.goto('https://opensea.io/collection/clonex-mintvial');
-    await page.waitForSelector(selectors.floorPrice, {timeout});
-    mintVial.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    await page.close();
-  } catch (err) {
-    console.log(`Error while trying to access MintVial data: ${err}`);
-    errors += 1;
-  }
-}
-
-const retrieveCloneXData = async (browser) => {
-  try {
-    const collectionSlug = 'clonex';
-    const url = `https://opensea.io/collection/${collectionSlug}?search[sortAscending]=true&search[sortBy]=PRICE`;
-    const page = await browser.newPage();
-    await page.setExtraHTTPHeaders({'Accept-Language': 'en'});
-    await page.setUserAgent('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Ubuntu Chromium/78.0.3904.108 Chrome/78.0.3904.108 Safari/537.36');
-
-    await page.goto(url);
-    await page.waitForSelector(selectors.floorPrice, {timeout});
-    cloneX.floorPrice = await page.$eval(selectors.floorPrice, e => parseFloat(e.textContent));
-    cloneX.supply = await retrieveSupply(page);
-    await toClick(page, selectors.box.dnaBoxVial);
-    await retrieveTraitsData(page, selectors.box.humanBox, cloneX.traits.human);
-    await retrieveTraitsData(page, selectors.box.robotBox, cloneX.traits.robot);
-    await retrieveTraitsData(page, selectors.box.demonBox, cloneX.traits.demon);
-    await retrieveTraitsData(page, selectors.box.angelBox, cloneX.traits.angel);
-    await retrieveTraitsData(page, selectors.box.reptileBox, cloneX.traits.reptile);
-    await retrieveTraitsData(page, selectors.box.undeadBox, cloneX.traits.undead);
-    await retrieveTraitsData(page, selectors.box.murakamiBox, cloneX.traits.murakami);
-    await retrieveTraitsData(page, selectors.box.alienBox, cloneX.traits.alien);
-    await page.close();
-  } catch (err) {
-    // console.log(err);
-    console.log(`Error while trying to access CloneX data: ${err}`);
-    errors += 1;
-  }
-}
+  return data;
+};
 
 const retrieveData = async () => {
-  const start = performance.now();
-  puppeteer.use(stealth);
-  const browser = await puppeteer.launch({
-    headless: true,
-    defaultViewport: {
-      width: 1200,
-      height: 800
-    },
-    // args: ['--proxy-server=zproxy.lum-superproxy.io:22225']
-  });
-  const page = await browser.newPage();
-  // await page.authenticate({
-  //   username: 'lum-customer-hl_9743e7ee-zone-my_zone-country-us',
-  //   password: 'w648wbbr4vdt'
-  // });
-  await page.goto('https://www.monip.io/');
-  const ip = await page.$eval('body > p:nth-child(3)', e => e.textContent);
-  await page.close();
-  console.log(`Script started using ${ip}...`);
-  let data = {};
+  try {
+    const start = performance.now();
 
-  if (fs.existsSync('./data/mintVialData.json'))
-    data = JSON.parse(fs.readFileSync('./data/mintVialData.json'));
-  else
-    data.lastSuccessfullUpdate = 0;
-
-  errors = 0;
-  await Promise.all([
-    retrieveMintVialData(browser),
-    retrieveCloneXData(browser)
-  ]);
-  await browser.close();
-  console.log(performance.now() - start);
-  return ({
-    cloneX,
-    mintVial,
-    lastUpdate: Date.now(),
-    lastSuccessfullUpdate: errors >= 1 ? data.lastSuccessfullUpdate : Date.now()
-  });
+    await Promise.all([
+      retrieveCollectionData('0x348fc118bcc65a92dc033a951af153d14d945312', 'clonex-mintvial', mintVial),
+      retrieveCollectionData('0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b', 'clonex', cloneX)
+    ]);
+    console.log(performance.now() - start);
+    return ({
+      mintVial,
+      cloneX,
+      lastUpdate: Date.now(),
+    });
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 const updateJSON = async () => {
-  const data = await retrieveData();
-  const json = JSON.stringify(data);
   const dataDirectory = path.join(process.cwd(), 'data');
   const filename = '/mintVialData.json';
+  const filePath = dataDirectory + filename;
+  const data = await retrieveData();
+  const json = JSON.stringify(data);
 
-  if (errors <= 1)
-    fs.writeFile(dataDirectory + filename, json, () => console.log(`${filename} updated.`));
-  else {
-    console.log(`${filename} not updated.`);
-    console.log('Trying one more time');
-    await updateJSON();
-  }
+  fs.writeFile(filePath, json, () => console.log(`${filename} updated.`));
 }
 
 (async () => {
