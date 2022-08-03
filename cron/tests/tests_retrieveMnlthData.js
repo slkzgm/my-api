@@ -1,6 +1,7 @@
 const { performance } = require('perf_hooks');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const axios = require("axios");
 const stealth = StealthPlugin();
 
 const selectors = {
@@ -28,6 +29,53 @@ const selectors = {
 let skinVial = {
   floorPrice: 0,
   supply: 0,
+  traits: {
+    human: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    robot: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    demon: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    angel: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    reptile: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    undead: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    murakami: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+    alien: {
+      floorPrice: 0,
+      supply: 0,
+      supplyListed: 0
+    },
+  }
+};
+let dunkGenesis = {
+  floorPrice: 0,
+  supply: 0,
+  equippedSupply: 0,
   traits: {
     human: {
       floorPrice: 0,
@@ -194,6 +242,57 @@ const testBypass6 = async () => {
   }
 };
 
+const retrieveCollectionStats = async (collectionContract) => (await axios.get(
+    `https://api.reservoir.tools/collection/v3?id=${collectionContract}`,
+    {
+      headers: {
+        Accept: '*/*',
+        body: JSON.stringify({collection: '0xf661d58cfe893993b11d53d11148c4650590c692'})
+      }})
+).data.collection;
+
+const retrieveCollectionAttributes = async (collectionContract) => (await axios.get(
+    `https://api.reservoir.tools/collections/${collectionContract}/attributes/explore/v3?limit=5000`,
+    {
+      headers: {
+        Accept: '*/*',
+        body: JSON.stringify({collection: '0xf661d58cfe893993b11d53d11148c4650590c692'})
+      }})
+).data.attributes;
+
+const retrieveSupplyPerAttributes = async (collectionSlug) => {
+  const data = (await axios.get(
+      `https://api.opensea.io/api/v1/collection/${collectionSlug}`)
+  ).data.collection
+  const supply = data.traits['DNA'];
+
+  if (collectionSlug === 'rtfkt-nike-cryptokicks') {
+    console.log(data.traits['VIAL']['equipped']);
+    supply.equippedSupply = data.traits['VIAL']['equipped'];
+  }
+  return supply;
+}
+
+const test0xReservoirAPI = async (collectionContract, collectionSlug, data) => {
+  const stats = await retrieveCollectionStats(collectionContract);
+  const attributes = await retrieveCollectionAttributes(collectionContract);
+  const dnaAttr = attributes.filter(attr => attr.key === 'DNA');
+  const supplyPerAttributes = await retrieveSupplyPerAttributes(collectionSlug);
+
+  data.floorPrice = stats.floorAsk.price;
+  data.supply = parseInt(stats.tokenCount);
+  dnaAttr.map(dna => {
+    data.traits[dna.value.toLowerCase()] = {
+      floorPrice: dna.floorAskPrices[0],
+      supply: supplyPerAttributes[dna.value.toLowerCase()],
+      supplyListed: dna.onSaleCount
+    }
+  });
+  if (collectionSlug === 'rtfkt-nike-cryptokicks')
+    data.equippedSupply = supplyPerAttributes.equippedSupply;
+  return data;
+};
+
 const retrieveSupply = async (page) => {
   return await page.$eval(selectors.supply, e => parseInt(e.textContent
     .replace(" ", "")
@@ -279,7 +378,9 @@ const retrieveData = async () => {
   // await testBypass3();
   // await testBypass4();
   // await testBypass5();
-  await testBypass6();
+  // await testBypass6();
+  const res = await test0xReservoirAPI('0xf661d58cfe893993b11d53d11148c4650590c692', 'rtfkt-nike-cryptokicks', dunkGenesis);
+  console.log(res);
 
   // await browser.close();
 
