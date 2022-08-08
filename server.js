@@ -75,9 +75,14 @@ app.get('/mnlth/target', (req, res) => {
   res.status(200).json(mnlthLib.getTarget());
 });
 
-app.get('/slkappz', (req, res) => {
-  res.status(200).json(slkappzLib.getData());
-});
+app.get('/slkappz', (req, res) =>
+  res.status(200).json(slkappzLib.getMetaTags()));
+
+app.get('/slkappz/mnlth', (req, res) =>
+  res.status(200).json(slkappzLib.getMetaTags('mnlth')));
+
+app.get('/slkappz/mintvial', (req, res) =>
+  res.status(200).json(slkappzLib.getMetaTags('mintvial')));
 
 const port = 3000;
 const server = app.listen(port, () => {
