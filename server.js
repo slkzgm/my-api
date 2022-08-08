@@ -1,11 +1,13 @@
 const cors = require('cors');
 const express = require('express');
-const slkappzLib = require("./lib/slkappz");
-const mnlthLib = require("./lib/mnlth");
+const path = require('path');
 const mintVialLib = require("./lib/mintVial");
+const mnlthLib = require("./lib/mnlth");
+const slkappzLib = require("./lib/slkappz");
 
 const app = express();
 app.use(cors());
+app.use('/public', express.static(path.join(__dirname, '/public')))
 
 app.get('/', (req, res) => {
   res.send("GM WORLDDD!");
