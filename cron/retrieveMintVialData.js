@@ -58,7 +58,6 @@ const retrieveCollectionStats = async (collectionContract) => (await axios.get(
     {
       headers: {
         Accept: '*/*',
-        body: JSON.stringify({collection: '0xf661d58cfe893993b11d53d11148c4650590c692'})
       }})
 ).data.collection;
 
@@ -67,7 +66,6 @@ const retrieveCollectionAttributes = async (collectionContract) => (await axios.
     {
       headers: {
         Accept: '*/*',
-        body: JSON.stringify({collection: '0xf661d58cfe893993b11d53d11148c4650590c692'})
       }})
 ).data.attributes;
 
