@@ -32,5 +32,14 @@ module.exports = {
 		script: "./index.js",
 		cwd: "/home/lukas/mintvial-discord-bot",
 		watch: true
+	}, {
+		name: "refreshCollectionsData",
+		script: "./cron/refreshCollectionsData.js",
+		watch: true,
+		autorestart: false,
+		cron_restart: "0 */2 * * *",
+		instances: 1,
+		exec_mode: "fork",
+		cwd: "/home/lukas/my-api"
 	}]
 }
