@@ -4,6 +4,8 @@ const path = require('path');
 const mintVialLib = require("./lib/mintVial");
 const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
+const {isNumber} = require("util");
+const sandboxLib = require("./lib/sandbox");
 
 const app = express();
 app.use(cors());
@@ -85,6 +87,10 @@ app.get('/slkappz/mnlth', (req, res) =>
 
 app.get('/slkappz/mintvial', (req, res) =>
   res.status(200).json(slkappzLib.getMetaTags('mintvial')));
+
+app.get('/sandbox/:id', async (req, res) => {
+  return res.status(200).json(await sandboxLib.getSandboxAsset(parseInt(req.params.id)));
+});
 
 const port = 3000;
 const server = app.listen(port, () => {
