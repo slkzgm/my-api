@@ -1,0 +1,26 @@
+{
+  "default": {
+    "name": "SlKzᵍᵐ",
+    "description": "Enter the SlKz space!\nGet informed about CloneX Mintvial and MNLTH reveal process, and follow the development of my projects.",
+    "imgUrl": "https://www.slkzgm.com/public/img/4608.png",
+    "twitterSite": "https://www.twitter.com/lstehaye",
+    "twitterCreator": "https://www.twitter.com/lstehaye",
+    "title": "SlKAppz"
+  },
+  "mnlth": {
+    "name": "SlKzᵍᵐ",
+    "description": "Track MNLTH supply in real time!",
+    "imgUrl": "https://www.slkzgm.com/public/img/mnlth.png",
+    "twitterSite": "https://www.twitter.com/lstehaye",
+    "twitterCreator": "https://www.twitter.com/lstehaye",
+    "title": "MNLTH SUPPLY"
+  },
+  "mintvial": {
+    "name": "SlKzᵍᵐ",
+    "description": "Track CloneX Mintvial supply in real time!",
+    "imgUrl": "https://www.slkzgm.com/public/img/mintvial.png",
+    "twitterSite": "https://www.twitter.com/lstehaye",
+    "twitterCreator": "https://www.twitter.com/lstehaye",
+    "title": "MINTVIAL SUPPLY"
+  }
+}
