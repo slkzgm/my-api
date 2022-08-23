@@ -4,7 +4,6 @@ const path = require('path');
 const mintVialLib = require("./lib/mintVial");
 const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
-const {isNumber} = require("util");
 const sandboxLib = require("./lib/sandbox");
 
 const app = express();
@@ -43,40 +42,32 @@ app.get('/mintVial/target', (req, res) => {
   res.status(200).json(mintVialLib.getTarget());
 });
 
-app.get('/mnlth', (req, res) => {
-  res.status(201).json(mnlthLib.getData());
+app.get('/mnlth', async (req, res) => {
+  res.status(200).json(await mnlthLib.getData());
 });
 
-app.get('/mnlth/diff', (req, res) => {
-  res.status(200).json(mnlthLib.getDiff());
+app.get('/mnlth/diff', async (req, res) => {
+  res.status(200).json(await mnlthLib.getDiff());
 });
 
-app.get('/mnlth/dunk', (req, res) => {
-  res.status(200).json(mnlthLib.getDunk());
+app.get('/mnlth/floor', async (req, res) => {
+  res.status(200).json(await mnlthLib.getFloor());
 });
 
-app.get('/mnlth/floor', (req, res) => {
-  res.status(200).json(mnlthLib.getFloor());
+app.get('/mnlth/left', async (req, res) => {
+  res.status(200).json(await mnlthLib.getLeft());
 });
 
-app.get('/mnlth/left', (req, res) => {
-  res.status(200).json(mnlthLib.getLeft());
+app.get('/mnlth/opening', async (req, res) => {
+  res.status(200).json(await mnlthLib.getOpening());
 });
 
-app.get('/mnlth/opening', (req, res) => {
-  res.status(200).json(mnlthLib.getOpening());
+app.get('/mnlth/revealed', async (req, res) => {
+  res.status(200).json(await mnlthLib.getRevealed());
 });
 
-app.get('/mnlth/revealed', (req, res) => {
-  res.status(200).json(mnlthLib.getRevealed());
-});
-
-app.get('/mnlth/skinvials', (req, res) => {
-  res.status(200).json(mnlthLib.getSkinVials());
-});
-
-app.get('/mnlth/target', (req, res) => {
-  res.status(200).json(mnlthLib.getTarget());
+app.get('/mnlth/target', async (req, res) => {
+  res.status(200).json(await mnlthLib.getTarget());
 });
 
 app.get('/slkappz', (req, res) =>
