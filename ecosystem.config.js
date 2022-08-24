@@ -1,7 +1,7 @@
 module.exports = {
 	apps : [{
-		name: "mnlth-scrap",
-		script: "./cron/retrieveMnlthData.js",
+		name: "mnlth-update",
+		script: "./scripts/mnlth-database/update.js",
 		watch: "true",
 		autorestart: false,
 		cron_restart: "*/1 * * * *",
@@ -9,8 +9,8 @@ module.exports = {
 		exec_mode: "fork",
 		cwd: "/home/lukas/my-api"
 	},{
-		name: "mintvial-scrap",
-		script: "./cron/retrieveMintVialData.js",
+		name: "mintvial-update",
+		script: "./scripts/mintvials-database/update.js",
 		watch: "true",
 		autorestart: false,
 		cron_restart: "*/1 * * * *",
@@ -34,7 +34,7 @@ module.exports = {
 		watch: true
 	}, {
 		name: "refreshCollectionsData",
-		script: "./cron/refreshCollectionsData.js",
+		script: "./scripts/refreshCollectionsData.js",
 		watch: true,
 		autorestart: false,
 		cron_restart: "0 */2 * * *",

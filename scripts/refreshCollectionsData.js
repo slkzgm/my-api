@@ -5,14 +5,13 @@ let options = {
   headers: {
     Accept: '*/*',
     'Content-Type': 'application/json',
-    'x-api-key': '3d2262eb-b4ff-415f-bfe8-88471923a77e'
   },
   data: {
     body: ''
   }
 };
 
-const retrieveCollectionStats = async (contractList) => {
+const refreshCollectionData = async (contractList) => {
     contractList.map(async (contract) => {
       try {
         options.data = JSON.stringify({collection: contract});
@@ -28,9 +27,10 @@ const contractList = [
   '0x86825dfca7a6224cfbd2da48e85df2fc3aa7c4b1',
   '0x6d4bbc0387dd4759eee30f6a482ac6dc2df3facf',
   '0x9a06ef3a841316a9e2c1c93b9c21a7342abe484f',
-  '0xf661d58cfe893993b11d53d11148c4650590c692'
+  '0xf661d58cfe893993b11d53d11148c4650590c692',
+  "0x4fB48c4DA0a633aA9DE199Ad43Bf70e316310541"
 ];
 
 (async () => {
-  await retrieveCollectionStats(contractList);
+  await refreshCollectionData(contractList);
 })();
