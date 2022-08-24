@@ -76,8 +76,8 @@ app.get('/slkappz', (req, res) =>
 app.get('/slkappz/mnlth', (req, res) =>
   res.status(200).json(slkappzLib.getMetaTags('mnlth')));
 
-app.get('/slkappz/mintvial', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('mintvial')));
+app.get('/slkappz/mintvials', (req, res) =>
+  res.status(200).json(slkappzLib.getMetaTags('mintvials')));
 
 app.get('/sandbox/:id', async (req, res) => {
   return res.status(200).json(await sandboxLib.getSandboxAsset(parseInt(req.params.id)));
