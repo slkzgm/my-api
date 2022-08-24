@@ -1,7 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const path = require('path');
-const mintVialLib = require("./lib/mintVial");
+const mintvialsLib = require("./lib/mintvials");
 const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
 const sandboxLib = require("./lib/sandbox");
@@ -14,32 +14,32 @@ app.get('/', (req, res) => {
   res.send("GM WORLDDD!");
 });
 
-app.get('/mintVial', (req, res) => {
-  res.status(201).json(mintVialLib.getData());
+app.get('/mintvials', async (req, res) => {
+  res.status(200).json(await mintvialsLib.getData());
 });
 
-app.get('/mintVial/diff', (req, res) => {
-  res.status(200).json(mintVialLib.getDiff());
+app.get('/mintvials/diff', async (req, res) => {
+  res.status(200).json(await mintvialsLib.getDiff());
 });
 
-app.get('/mintVial/floor', (req, res) => {
-  res.status(200).json(mintVialLib.getFloor());
+app.get('/mintvials/floor', async (req, res) => {
+  res.status(200).json(await mintvialsLib.getFloor());
 });
 
-app.get('/mintVial/left', (req, res) => {
-  res.status(200).json(mintVialLib.getLeft());
+app.get('/mintvials/left', async (req, res) => {
+  res.status(200).json(await mintvialsLib.getLeft());
 });
 
-app.get('/mintVial/opening', (req, res) => {
-  res.status(200).json(mintVialLib.getOpening());
+app.get('/mintvials/opening', async (req, res) => {
+  res.status(200).json(await mintvialsLib.getOpening());
 });
 
-app.get('/mintVial/revealed', (req, res) => {
-  res.status(200).json(mintVialLib.getRevealed());
+app.get('/mintvials/revealed', async (req, res) => {
+  res.status(200).json(await mintvialsLib.getRevealed());
 });
 
-app.get('/mintVial/target', (req, res) => {
-  res.status(200).json(mintVialLib.getTarget());
+app.get('/mintvials/target', (req, res) => {
+  res.status(200).json(mintvialsLib.getTarget());
 });
 
 app.get('/mnlth', async (req, res) => {
@@ -66,8 +66,8 @@ app.get('/mnlth/revealed', async (req, res) => {
   res.status(200).json(await mnlthLib.getRevealed());
 });
 
-app.get('/mnlth/target', async (req, res) => {
-  res.status(200).json(await mnlthLib.getTarget());
+app.get('/mnlth/target', (req, res) => {
+  res.status(200).json(mnlthLib.getTarget());
 });
 
 app.get('/slkappz', (req, res) =>
