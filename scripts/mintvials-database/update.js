@@ -7,12 +7,22 @@ const {
   assetContractAbi
 } = require('./config.json')
 const axios = require('axios');
+const SkinvialsCollection = require("../../lib/mnlthDatabase");
+
+const getCollectionFloorPrice = async (collectionContract) => (await axios.get(
+  `https://api.reservoir.tools/collections/v5?contract=${collectionContract}`,
+  {
+    headers: {
+      Accept: '*/*'
+    }
+  }
+)).data.collections[0].floorAsk.price.amount.native;
 
 const getDnaAttributesStats = async (contractAddress) => (await axios.get(
     `https://api.reservoir.tools/collections/${contractAddress}/attributes/explore/v3?limit=5000`,
     {
       headers: {
-        Accept: '*/*',
+        Accept: '*/*'
       }})
 ).data.attributes.filter(attr => attr.key === 'DNA');
 
@@ -73,10 +83,10 @@ const updateFloorPrices = async () => {
   const priceToUpdate = dbPrices.map(db => {
     const apiFloorPrice = apiPrices.filter(api => api.dna.toUpperCase() === db.dna)[0].floorPrice;
 
-    if (db.floorPrice !== apiFloorPrice)
+    if (db.floorPrice !== apiFloorPrice && apiFloorPrice !== 0)
       return {
         dna: db.dna,
-        floorPrice: getLowest(db.floorPrice, apiFloorPrice)
+        floorPrice: apiFloorPrice
       }
   })
 
@@ -86,16 +96,32 @@ const updateFloorPrices = async () => {
   }
   await Promise.all(
     priceToUpdate
-      .map(newPrice => newPrice ? ClonesCollection.updateFloorPrice(newPrice.dna, newPrice.floorPrice) : true));
+      .map(newPrice => newPrice ?
+        ClonesCollection.updateFloorPrice(newPrice.dna, newPrice.floorPrice) : true));
 
   console.log('FLOOR PRICES UPDATED');
+};
+
+const updateRelatedFloorPrices = async () => {
+  const [mintvialsDbPrice, mintvialsApiPrice] = await Promise.all([
+    ClonesCollection.getCollectionsFloorPrices({name: 'MINTVIALS'}),
+    getCollectionFloorPrice('0x348FC118bcC65a92dC033A951aF153d14D945312')
+  ]);
+  console.log(mintvialsDbPrice, mintvialsApiPrice);
+  if (!mintvialsApiPrice || mintvialsApiPrice === mintvialsDbPrice[0].floorPrice) {
+    console.log('No new updates in related floor prices.');
+    return ;
+  }
+  await ClonesCollection.updateCollectionsFloorPrices('MINTVIALS', mintvialsApiPrice);
+  console.log('RELATED FLOOR PRICES UPDATED');
 };
 
 (async () => {
   try {
     await Promise.all([
       updateSupply(),
-      updateFloorPrices()
+      updateFloorPrices(),
+      updateRelatedFloorPrices()
     ]);
   } catch (e) {
     console.log(e);
