@@ -41,5 +41,10 @@ module.exports = {
 		instances: 1,
 		exec_mode: "fork",
 		cwd: "/home/lukas/my-api"
+	}, {
+		name: "rtfktrvl-twitterBot",
+		script: "./index.js",
+		watch: true,
+		cwd: "/home/lukas/rtfktrvl-twitter-bot"
 	}]
 }
