@@ -7,7 +7,6 @@ const {
   assetContractAbi
 } = require('./config.json')
 const axios = require('axios');
-const SkinvialsCollection = require("../../lib/mnlthDatabase");
 
 const getCollectionFloorPrice = async (collectionContract) => (await axios.get(
   `https://api.reservoir.tools/collections/v5?contract=${collectionContract}`,
@@ -71,7 +70,7 @@ const updateSupply = async () => {
     supplyToAdd[dna] += 1;
   });
   await Promise.all(Object.keys(supplyToAdd)
-    .map(dna => ClonesCollection.addVial(dna, supplyToAdd[dna], newLastSavedBlock)));
+    .map(dna => ClonesCollection.addVial(dna.toUpperCase(), supplyToAdd[dna], newLastSavedBlock)));
   console.log('SUPPLY UPDATED');
 };
 
