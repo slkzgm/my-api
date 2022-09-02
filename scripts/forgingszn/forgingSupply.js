@@ -78,7 +78,7 @@ const updateMintedSupply = async () => {
   const web3 = new Web3(new Web3.providers.WebsocketProvider(providerUrl));
   const contract = new web3.eth.Contract(contractAbi, contractAddress);
   const promisesList = [];
-  let i = 0;
+  let i = 1;
 
   while (i < 74) {
     promisesList.push(retrieveSupply(contract, i++));
