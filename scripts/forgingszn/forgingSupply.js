@@ -54,8 +54,7 @@ const getGeneralSupply = async () => {
   try {
     const supplyFindResult = await collection.find();
 
-    const test = await supplyFindResult.toArray();
-    console.log(test);
+    return await supplyFindResult.toArray();
   } catch (err) {
     console.log(err);
   } finally {
@@ -90,10 +89,7 @@ const updateMintedSupply = async () => {
   web3.currentProvider.disconnect();
 };
 
-(async () => {
-  await updateMintedSupply();
-})();
-
 module.exports = {
+  updateMintedSupply,
   getGeneralSupply
 };
