@@ -17,7 +17,16 @@ module.exports = {
 		instances: 1,
 		exec_mode: "fork",
 		cwd: "/home/lukas/my-api"
-	}, {
+	},{
+		name: "forgingzsn-update",
+		script: "./scripts/forgingszn/update.js",
+		watch: "true",
+		autorestart: false,
+		cron_restart: "*/1 * * * *",
+		instances: 1,
+		exec_mode: "fork",
+		cwd: "/home/lukas/my-api"
+	},{
 		name: "api-server",
 		script: "./server.js",
 		cwd: "/home/lukas/my-api",
