@@ -5,7 +5,7 @@ const mintvialsLib = require("./lib/mintvials");
 const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
 const sandboxLib = require("./lib/sandbox");
-const forgingSznLib = require("./scripts/forgingszn/forgingSupply");
+const forgingSznLib = require("./lib/forgingszn");
 
 const app = express();
 app.use(cors());
@@ -85,7 +85,7 @@ app.get('/sandbox/:id', async (req, res) => {
 });
 
 app.get('/forgingszn', async (req, res) => {
-  return res.status(200).json(await forgingSznLib.getGeneralSupply());
+  return res.status(200).json(await forgingSznLib.getData());
 });
 
 const port = 3000;
