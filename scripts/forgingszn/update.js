@@ -47,7 +47,7 @@ const updateMintedSupply = async () => {
   const promisesList = [];
   let i = 1;
 
-  while (i < 74) {
+  while (i <= 74) {
     promisesList.push(retrieveSupply(contract, i++));
   }
   const res = await Promise.all(promisesList);
