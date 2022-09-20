@@ -1,7 +1,0 @@
-{
-  "providerUrl": "wss://mainnet.infura.io/ws/v3/373ca1b7a588416fb561c2693c84a602",
-  "dbUser": "slkappz",
-  "dbPassword": "wmWEc09ag9r4fwaC",
-  "databaseName": "rtfkt-opening",
-  "databaseCollectionName": "skinvials"
-}
