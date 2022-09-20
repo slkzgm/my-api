@@ -106,7 +106,6 @@ const updateRelatedFloorPrices = async () => {
     ClonesCollection.getCollectionsFloorPrices({name: 'MINTVIALS'}),
     getCollectionFloorPrice('0x348FC118bcC65a92dC033A951aF153d14D945312')
   ]);
-  console.log(mintvialsDbPrice, mintvialsApiPrice);
   if (!mintvialsApiPrice || mintvialsApiPrice === mintvialsDbPrice[0].floorPrice) {
     console.log('No new updates in related floor prices.');
     return ;
