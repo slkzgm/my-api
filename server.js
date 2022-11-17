@@ -6,6 +6,7 @@ const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
 const sandboxLib = require("./lib/sandbox");
 const forgingSznLib = require("./lib/forgingszn");
+const ecosystemStatsLib = require("./lib/ecosystemStats");
 
 const app = express();
 app.use(cors());
@@ -89,6 +90,10 @@ app.get('/sandbox/:id', async (req, res) => {
 
 app.get('/forgingszn', async (req, res) => {
   return res.status(200).json(await forgingSznLib.getData());
+});
+
+app.get('/ecosystemStats', async (req, res) => {
+  return res.status(200).json(await ecosystemStatsLib.getData());
 });
 
 const port = 3000;
