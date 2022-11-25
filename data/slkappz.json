@@ -30,4 +30,13 @@
     "twitterSite": "https://www.twitter.com/lstehaye",
     "twitterCreator": "https://www.twitter.com/lstehaye",
     "title": "RTFKT x SANDBOX Voxel preview"
-  }}
+  },
+  "ecosystem": {
+    "name": "SlKzᵍᵐ",
+    "description": "Track RTFKT ecosystem markets statistics!",
+    "imgUrl": "https://www.slkzgm.com/public/img/market.png",
+    "twitterSite": "https://www.twitter.com/lstehaye",
+    "twitterCreator": "https://www.twitter.com/lstehaye",
+    "title": "RTFKT COLLECTIONS STATISTICS"
+  }
+}
