@@ -28,7 +28,11 @@ const init = async (fullCollection) => {
       savedAtBlock: actualBlock
     })
   });
-  await SkinvialsCollection.insertMany(tasks);
+  try {
+    await SkinvialsCollection.insertMany(tasks);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 (async () => {

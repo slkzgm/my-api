@@ -28,7 +28,9 @@ const init = async (fullCollection) => {
       savedAtBlock: actualBlock
     })
   });
-  await ClonesCollection.insertMany(tasks);
+  try {
+    await ClonesCollection.insertMany(tasks);
+  } catch (e) {console.log(e);}
 };
 
 (async () => {
