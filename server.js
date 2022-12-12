@@ -7,6 +7,7 @@ const slkappzLib = require("./lib/slkappz");
 const sandboxLib = require("./lib/sandbox");
 const forgingSznLib = require("./lib/forgingszn");
 const ecosystemStatsLib = require("./lib/ecosystemStats");
+const sizeCheckerLib = require("./lib/sizeChecker");
 
 const app = express();
 app.use(cors());
@@ -97,6 +98,10 @@ app.get('/forgingszn', async (req, res) => {
 
 app.get('/ecosystemStats', async (req, res) => {
   return res.status(200).json(await ecosystemStatsLib.getData());
+});
+
+app.get('/sizecheck/:id', async (req, res) => {
+  return res.status(200).json(await sizeCheckerLib.sizeCheck(parseInt(req.params.id)));
 });
 
 const port = 3000;
