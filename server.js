@@ -7,7 +7,7 @@ const slkappzLib = require("./lib/slkappz");
 const sandboxLib = require("./lib/sandbox");
 const forgingSznLib = require("./lib/forgingszn");
 const ecosystemStatsLib = require("./lib/ecosystemStats");
-const sizeCheckerLib = require("./lib/sizeChecker");
+const cirlLib = require("./lib/cirl")
 
 const app = express();
 app.use(cors());
@@ -104,7 +104,11 @@ app.get('/ecosystemStats', async (req, res) => {
 });
 
 app.get('/sizecheck/:id', async (req, res) => {
-  return res.status(200).json(await sizeCheckerLib.sizeCheck(parseInt(req.params.id)));
+  return res.status(200).json(await cirlLib.sizeCheck(req.params.id));
+});
+
+app.get('/cirlfind', async (req, res) => {
+  return res.status(200).json(await cirlLib.getSize(req.query.size, req.query.cw));
 });
 
 const port = 3000;
