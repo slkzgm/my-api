@@ -108,7 +108,12 @@ app.get('/sizecheck/:id', async (req, res) => {
 });
 
 app.get('/cirlfind', async (req, res) => {
-  return res.status(200).json(await cirlLib.getSize(req.query.size, req.query.cw));
+  const onlyHubbed = (req.query.onlyHubbed === 'true');
+  return res.status(200).json(await cirlLib.getSize(req.query.size, req.query.cw, onlyHubbed));
+});
+
+app.get('/cirldetails/:id', async (req, res) => {
+  return res.status(200).json(await cirlLib.getDetails(req.params.id));
 });
 
 const port = 3000;

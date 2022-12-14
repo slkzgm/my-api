@@ -3,14 +3,14 @@ const CirlCollection = require('../../lib/cirlDatabase');
 
 const update = async () => {
   try {
-    const [lastHubbedId, lastMintedCirl] = await Promise.all([
-      CirlCollection.getLastHubbedId(),
+    const [lastSavedId, lastMintedCirl] = await Promise.all([
+      CirlCollection.getLastSavedId(),
       EthLib.getCirlSupply()
     ]);
-    const start = lastHubbedId ? lastHubbedId.id + 1 : 0;
+    const start = lastSavedId ? lastSavedId.id + 1 : 0;
 
     console.log(`Minted Cirl: ${lastMintedCirl}`);
-    console.log(`Last Hubbed Cirl: ${start}`);
+    console.log(`Last saved Cirl: ${start}`);
 
     const promisesList = [];
     for (let i = start; i <= lastMintedCirl; i++) {
@@ -32,7 +32,7 @@ const update = async () => {
       if (tasks.length)
         await CirlCollection.insertMany(tasks);
       else
-        console.log('No new hubbed Cirl');
+        console.log('No new Cirl minted');
     }
   } catch (e) {console.log(e);}
 }
