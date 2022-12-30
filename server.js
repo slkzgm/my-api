@@ -8,6 +8,7 @@ const sandboxLib = require("./lib/sandbox");
 const forgingSznLib = require("./lib/forgingszn");
 const ecosystemStatsLib = require("./lib/ecosystemStats");
 const cirlLib = require("./lib/cirl")
+const dotSwooshLib = require("./lib/dotSwoosh");
 
 const app = express();
 app.use(cors());
@@ -114,6 +115,10 @@ app.get('/cirlfind', async (req, res) => {
 
 app.get('/cirldetails/:id', async (req, res) => {
   return res.status(200).json(await cirlLib.getDetails(req.params.id));
+});
+
+app.get('/dotswoosh/:handle', async (req, res) => {
+  return res.status(200).json(await dotSwooshLib.getByHandle(req.params.handle));
 });
 
 const port = 3000;
