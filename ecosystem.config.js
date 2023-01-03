@@ -66,5 +66,10 @@ module.exports = {
 			script: "./index.js",
 			watch: true,
 			cwd: "/home/lukas/rtfktrvl-twitter-bot"
+		}, {
+			name: "dotSwoosh-twitterBot",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/dotSwoosh-twitter-bot"
 		}]
 }
