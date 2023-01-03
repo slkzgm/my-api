@@ -26,6 +26,15 @@ module.exports = {
 		instances: 1,
 		exec_mode: "fork",
 		cwd: "/home/lukas/my-api"
+	},{
+		name: "dotSwoosh-update",
+		script: "./scripts/dotswoosh-database/update.js",
+		watch: "true",
+		autorestart: false,
+		cron_restart: "*/2 * * * *",
+		instances: 1,
+		exec_mode: "fork",
+		cwd: "/home/lukas/my-api"
 	},
 		// {name: "forgingzsn-update", script: "./scripts/forgingszn/update.js", watch: "true", autorestart: false, cron_restart: "*/3 * * * *", instances: 1, exec_mode: "fork", cwd: "/home/lukas/my-api"},
 		{
