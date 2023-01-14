@@ -117,8 +117,20 @@ app.get('/cirldetails/:id', async (req, res) => {
   return res.status(200).json(await cirlLib.getDetails(req.params.id));
 });
 
-app.get('/dotswoosh/:handle', async (req, res) => {
+app.get('/dotswoosh/handle/:handle', async (req, res) => {
   return res.status(200).json(await dotSwooshLib.getByHandle(req.params.handle));
+});
+
+app.get('/dotswoosh/distribution', async (req, res) => {
+  return res.status(200).json(await dotSwooshLib.getDistribution());
+});
+
+app.get('/dotswoosh/distribution/colors', async (req, res) => {
+  return res.status(200).json((await dotSwooshLib.getColorDistribution()).slice(0, 50));
+});
+
+app.get('/dotswoosh/distribution/logos', async (req, res) => {
+  return res.status(200).json(await dotSwooshLib.getColorDistribution());
 });
 
 const port = 3000;
