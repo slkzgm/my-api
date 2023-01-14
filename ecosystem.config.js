@@ -71,5 +71,10 @@ module.exports = {
 			script: "./index.js",
 			watch: true,
 			cwd: "/home/lukas/dotSwoosh-twitter-bot"
+		}, {
+			name: "MEV",
+			script: "./stream-api-2.js",
+			watch: true,
+			cwd: "/home/lukas/MEV"
 		}]
 }
