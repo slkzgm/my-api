@@ -130,7 +130,7 @@ app.get('/dotswoosh/distribution/colors', async (req, res) => {
 });
 
 app.get('/dotswoosh/distribution/logos', async (req, res) => {
-  return res.status(200).json(await dotSwooshLib.getColorDistribution());
+  return res.status(200).json(await dotSwooshLib.getLogoDistribution());
 });
 
 const port = 3000;
