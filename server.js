@@ -1,6 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const path = require('path');
+const bodyParser = require('body-parser');
 const mintvialsLib = require("./lib/mintvials");
 const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
@@ -13,7 +14,8 @@ const oncyberLib = require("./lib/oncyber");
 
 const app = express();
 app.use(cors());
-app.use('/public', express.static(path.join(__dirname, '/public')))
+app.use('/public', express.static(path.join(__dirname, '/public')));
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send("GM WORLDDD!");
@@ -137,8 +139,17 @@ app.get('/dotswoosh/distribution/logos', async (req, res) => {
   return res.status(200).json(await dotSwooshLib.getLogoDistribution());
 });
 
-app.get('/oncyber/:hash', async (req, res) => {
-  return res.status(200).json(await oncyberLib.getOncyberFilesLink(req.params.hash));
+app.post('/oncyber/extractor', async (req, res) => {
+  const regex = /^https:\/\/oncyber\.io\/(spaces\/[a-zA-Z0-9]+|[a-zA-Z0-9]+)$/;
+  if (!req.body) {
+    return res.status(400).send({ error: 'Bad Request' });
+  }
+  const url = req.body.url;
+
+  if (!regex.test(url)) {
+    return res.status(400).send({ error: 'Invalid URL format' });
+  }
+  return res.status(200).json(await oncyberLib.getOncyberFilesLink(url));
 });
 
 const port = 3000;
