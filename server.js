@@ -9,6 +9,7 @@ const forgingSznLib = require("./lib/forgingszn");
 const ecosystemStatsLib = require("./lib/ecosystemStats");
 const cirlLib = require("./lib/cirl")
 const dotSwooshLib = require("./lib/dotSwoosh");
+const oncyberLib = require("./lib/oncyber");
 
 const app = express();
 app.use(cors());
@@ -131,6 +132,10 @@ app.get('/dotswoosh/distribution/colors', async (req, res) => {
 
 app.get('/dotswoosh/distribution/logos', async (req, res) => {
   return res.status(200).json(await dotSwooshLib.getLogoDistribution());
+});
+
+app.get('/oncyber/:hash', async (req, res) => {
+  return res.status(200).json(await oncyberLib.getOncyberFilesLink(req.params.hash));
 });
 
 const port = 3000;
