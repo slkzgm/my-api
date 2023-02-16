@@ -9,18 +9,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@opensea/stream-js": "0.0.23",
     "@types/node": "^17.0.45",
     "axios": "^0.27.2",
     "body-parser": "^1.20.1",
     "cheerio": "^1.0.0-rc.12",
     "cors": "^2.8.5",
     "dotenv": "^16.0.2",
+    "ethereum-input-data-decoder": "^0.4.2",
     "express": "^4.18.1",
     "fs": "0.0.1-security",
     "mongodb": "^4.9.0",
     "puppeteer": "^14.4.1",
     "puppeteer-extra": "^3.3.4",
     "puppeteer-extra-plugin-stealth": "^2.11.1",
-    "web3": "^1.7.5"
+    "sse-channel": "^4.0.0",
+    "web3": "^1.7.5",
+    "ws": "^8.12.1"
   }
 }

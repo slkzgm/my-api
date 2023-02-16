@@ -11,6 +11,8 @@ const ecosystemStatsLib = require("./lib/ecosystemStats");
 const cirlLib = require("./lib/cirl")
 const dotSwooshLib = require("./lib/dotSwoosh");
 const oncyberLib = require("./lib/oncyber");
+// const sseChannel = require("./lib/sseChannel");
+const blurLib = require("./lib/blur");
 
 const app = express();
 app.use(cors());
@@ -151,6 +153,23 @@ app.post('/oncyber/extractor', async (req, res) => {
   }
   return res.status(200).json(await oncyberLib.getOncyberFilesLink(url));
 });
+
+app.post('/blur/airdrop', (req, res) => {
+  const regex = /^https:\/\/airdrop\.blur\.foundation\/\?data=.*/
+  if (!req.body) {
+    return res.status(400).send({ error: 'Bad Request' });
+  }
+  const url = req.body.url;
+
+  if (!regex.test(url)) {
+    return res.status(400).send({ error: 'Invalid URL format' });
+  }
+  return res.status(200).json(blurLib.getInput(url));
+});
+
+// app.get('/stream', (req, res) => {
+//   sseChannel.addClient(req, res);
+// });
 
 const port = 3000;
 const server = app.listen(port, () => {
