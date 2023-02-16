@@ -100,6 +100,9 @@ app.get('/slkappz/sizecheck', (req, res) =>
 app.get('/slkappz/oncyber', (req, res) =>
   res.status(200).json(slkappzLib.getMetaTags('oncyber')));
 
+app.get('/slkappz/blur', (req, res) =>
+  res.status(200).json(slkappzLib.getMetaTags('blur')));
+
 app.get('/sandbox/:id', async (req, res) => {
   return res.status(200).json(await sandboxLib.getSandboxAsset(parseInt(req.params.id)));
 });
