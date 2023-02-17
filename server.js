@@ -11,7 +11,7 @@ const ecosystemStatsLib = require("./lib/ecosystemStats");
 const cirlLib = require("./lib/cirl")
 const dotSwooshLib = require("./lib/dotSwoosh");
 const oncyberLib = require("./lib/oncyber");
-// const sseChannel = require("./lib/sseChannel");
+const sseChannel = require("./lib/sseChannel");
 const blurLib = require("./lib/blur");
 
 const app = express();
@@ -170,9 +170,9 @@ app.post('/blur/airdrop', (req, res) => {
   return res.status(200).json(blurLib.getInput(url));
 });
 
-// app.get('/stream', (req, res) => {
-//   sseChannel.addClient(req, res);
-// });
+app.get('/stream', (req, res) => {
+  sseChannel.addClient(req, res);
+});
 
 const port = 3000;
 const server = app.listen(port, () => {
