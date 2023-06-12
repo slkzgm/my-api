@@ -104,6 +104,9 @@ app.get('/slkappz/oncyber', (req, res) =>
 app.get('/slkappz/blur', (req, res) =>
   res.status(200).json(slkappzLib.getMetaTags('blur')));
 
+app.get('/slkappz/claimcheck', (req, res) =>
+    res.status(200).json(slkappzLib.getMetaTags('claimcheck')));
+
 app.get('/sandbox/:id', async (req, res) => {
   return res.status(200).json(await sandboxLib.getSandboxAsset(parseInt(req.params.id)));
 });
