@@ -13,6 +13,7 @@ const dotSwooshLib = require("./lib/dotSwoosh");
 const oncyberLib = require("./lib/oncyber");
 const sseChannel = require("./lib/sseChannel");
 const blurLib = require("./lib/blur");
+const claimCheckerLib = require("./lib/claimChecker");
 
 const app = express();
 app.use(cors());
@@ -126,6 +127,10 @@ app.get('/cirlfind', async (req, res) => {
 
 app.get('/cirldetails/:id', async (req, res) => {
   return res.status(200).json(await cirlLib.getDetails(req.params.id));
+});
+
+app.get('/claimcheck/:id', async (req, res) => {
+  return res.status(200).json(await claimCheckerLib.getClaimedStatus(req.params.id));
 });
 
 app.get('/dotswoosh/handle/:handle', async (req, res) => {

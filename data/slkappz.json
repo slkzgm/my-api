@@ -62,4 +62,13 @@
     "twitterSite": "https://www.twitter.com/lstehaye",
     "twitterCreator": "https://www.twitter.com/lstehaye",
     "title": "$BLUR CONTRACT CLAIM"
-  }}
+  },
+  "claim": {
+    "name": "SlKzᵍᵐ",
+    "description": "Easily check which assets have been claimed by a CloneX",
+    "imgUrl": "https://www.slkzgm.com/public/img/claimcheck.png",
+    "twitterSite": "https://www.twitter.com/lstehaye",
+    "twitterCreator": "https://www.twitter.com/lstehaye",
+    "title": "CLONEX CLAIM CHECKER"
+  }
+}
