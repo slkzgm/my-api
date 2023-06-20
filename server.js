@@ -14,6 +14,7 @@ const oncyberLib = require("./lib/oncyber");
 const sseChannel = require("./lib/sseChannel");
 const blurLib = require("./lib/blur");
 const claimCheckerLib = require("./lib/claimChecker");
+const clonexeggsLib = require("./lib/clonexeggs");
 
 const app = express();
 app.use(cors());
@@ -135,6 +136,9 @@ app.get('/cirldetails/:id', async (req, res) => {
 app.get('/claimcheck/:id', async (req, res) => {
   return res.status(200).json(await claimCheckerLib.getClaimedStatus(req.params.id));
 });
+
+app.get('/eggscheck', async (req, res) =>
+    res.status(200).json(await clonexeggsLib.getAvailablesEggs()));
 
 app.get('/dotswoosh/handle/:handle', async (req, res) => {
   return res.status(200).json(await dotSwooshLib.getByHandle(req.params.handle));
