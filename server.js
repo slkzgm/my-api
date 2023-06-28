@@ -82,28 +82,28 @@ app.get('/mnlth/target', (req, res) => {
 });
 
 app.get('/slkappz', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags()));
+    res.status(200).json(slkappzLib.getMetaTags()));
 
 app.get('/slkappz/mnlth', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('mnlth')));
+    res.status(200).json(slkappzLib.getMetaTags('mnlth')));
 
 app.get('/slkappz/mintvials', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('mintvials')));
+    res.status(200).json(slkappzLib.getMetaTags('mintvials')));
 
 app.get('/slkappz/sandbox', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('sandbox')));
+    res.status(200).json(slkappzLib.getMetaTags('sandbox')));
 
 app.get('/slkappz/ecosystem', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('ecosystem')));
+    res.status(200).json(slkappzLib.getMetaTags('ecosystem')));
 
 app.get('/slkappz/sizecheck', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('sizecheck')));
+    res.status(200).json(slkappzLib.getMetaTags('sizecheck')));
 
 app.get('/slkappz/oncyber', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('oncyber')));
+    res.status(200).json(slkappzLib.getMetaTags('oncyber')));
 
 app.get('/slkappz/blur', (req, res) =>
-  res.status(200).json(slkappzLib.getMetaTags('blur')));
+    res.status(200).json(slkappzLib.getMetaTags('blur')));
 
 app.get('/slkappz/claimcheck', (req, res) =>
     res.status(200).json(slkappzLib.getMetaTags('claimcheck')));
@@ -139,6 +139,22 @@ app.get('/claimcheck/:id', async (req, res) => {
 
 app.get('/eggscheck', async (req, res) =>
     res.status(200).json(await clonexeggsLib.getAvailablesEggs()));
+
+app.get('/eggtoclone/:id', async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).send({ error: 'Bad Request' });
+    }
+    const cloneId = await clonexeggsLib.eggToClone(req.params.id);
+    if (cloneId === 0) {
+      return res.status(400).send({ error: 'Token id do not exist'});
+    }
+    return res.status(200).json({eggId: req.params.id, cloneId});
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ error: 'Invalid Request' });
+  }
+});
 
 app.get('/dotswoosh/handle/:handle', async (req, res) => {
   return res.status(200).json(await dotSwooshLib.getByHandle(req.params.handle));
