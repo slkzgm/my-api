@@ -108,6 +108,9 @@ app.get('/slkappz/blur', (req, res) =>
 app.get('/slkappz/claimcheck', (req, res) =>
     res.status(200).json(slkappzLib.getMetaTags('claimcheck')));
 
+app.get('/slkappz/eggs', (req, res) =>
+    res.status(200).json(slkappzLib.getMetaTags('eggs')));
+
 app.get('/sandbox/:id', async (req, res) => {
   return res.status(200).json(await sandboxLib.getSandboxAsset(parseInt(req.params.id)));
 });
