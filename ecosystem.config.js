@@ -117,6 +117,12 @@ module.exports = {
 			script: "./src/monitor.js",
 			watch: true,
 			cwd: "/home/lukas/bonusdao"
-		}
+		},
+                {
+                        name: "azuki-discord-bot",
+                        script: "./index.js",
+                        watch: true,
+                        cwd: "/home/lukas/azuki-discord-bot"
+                },
 	]
 }
