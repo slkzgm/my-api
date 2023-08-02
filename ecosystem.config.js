@@ -118,11 +118,17 @@ module.exports = {
 			watch: true,
 			cwd: "/home/lukas/bonusdao"
 		},
-                {
-                        name: "azuki-discord-bot",
-                        script: "./index.js",
-                        watch: true,
-                        cwd: "/home/lukas/azuki-discord-bot"
-                },
+		{
+			name: "azuki-discord-bot",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/azuki-discord-bot"
+		},
+		{
+			name: "weth-auto-withdraw",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/weth-auto-withdraw"
+		},
 	]
 }
