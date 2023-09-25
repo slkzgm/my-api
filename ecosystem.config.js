@@ -130,5 +130,17 @@ module.exports = {
 			watch: true,
 			cwd: "/home/lukas/weth-auto-withdraw"
 		},
+		{
+			name: "rtfkt-stole-link",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/link-contract"
+		},
+		{
+			name: "discord-chatbox",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/discord-chatbox"
+		},
 	]
 }
