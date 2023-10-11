@@ -134,7 +134,7 @@ module.exports = {
 			name: "rtfkt-stole-link",
 			script: "./index.js",
 			watch: true,
-			cwd: "/home/lukas/link-contract"
+			cwd: "/home/lukas/rtfkt-link-contract-exploit"
 		},
 		{
 			name: "discord-chatbox",
