@@ -15,6 +15,7 @@ const sseChannel = require("./lib/sseChannel");
 const blurLib = require("./lib/blur");
 const claimCheckerLib = require("./lib/claimChecker");
 const clonexeggsLib = require("./lib/clonexeggs");
+const dunkLib = require("./lib/dunk");
 
 const app = express();
 app.use(cors());
@@ -111,6 +112,9 @@ app.get('/slkappz/claimcheck', (req, res) =>
 app.get('/slkappz/eggs', (req, res) =>
     res.status(200).json(slkappzLib.getMetaTags('eggs')));
 
+app.get('/slkappz/dunk', (req, res) =>
+    res.status(200).json(slkappzLib.getMetaTags('dunk')));
+
 app.get('/sandbox/:id', async (req, res) => {
   return res.status(200).json(await sandboxLib.getSandboxAsset(parseInt(req.params.id)));
 });
@@ -153,6 +157,18 @@ app.get('/eggtoclone/:id', async (req, res) => {
       return res.status(400).send({ error: 'Token id do not exist'});
     }
     return res.status(200).json({eggId: req.params.id, cloneId});
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ error: 'Invalid Request' });
+  }
+});
+
+app.get('/dunk/:id', async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).send({ error: 'Bad Request' });
+    }
+    return res.status(200).json(await dunkLib.getDunkDetails(req.params.id));
   } catch (e) {
     console.log(e);
     return res.status(400).send({ error: 'Invalid Request' });
