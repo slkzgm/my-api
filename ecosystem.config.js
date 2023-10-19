@@ -30,6 +30,16 @@ module.exports = {
 			exec_mode: "fork",
 			cwd: "/home/lukas/my-api"
 		},
+		{
+			name: "dunk-forge-update",
+			script: "./scripts/dunk-forge-database/update.js",
+			watch: "true",
+			autorestart: false,
+			cron_restart: "*/1 * * * *",
+			instances: 1,
+			exec_mode: "fork",
+			cwd: "/home/lukas/my-api"
+		},
 		// {
 		// 	name: "cirl-update",
 		// 	script: "./scripts/cirl-database/update.js",

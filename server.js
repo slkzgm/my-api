@@ -16,6 +16,7 @@ const blurLib = require("./lib/blur");
 const claimCheckerLib = require("./lib/claimChecker");
 const clonexeggsLib = require("./lib/clonexeggs");
 const dunkLib = require("./lib/dunk");
+const dunkForgeLib = require("./lib/dunkForge");
 
 const app = express();
 app.use(cors());
@@ -169,6 +170,15 @@ app.get('/dunk/:id', async (req, res) => {
       return res.status(400).send({ error: 'Bad Request' });
     }
     return res.status(200).json(await dunkLib.getDunkDetails(req.params.id));
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ error: 'Invalid Request' });
+  }
+});
+
+app.get('/forge/dunk', async (req, res) => {
+  try {
+    return res.status(200).json(await dunkForgeLib.getData());
   } catch (e) {
     console.log(e);
     return res.status(400).send({ error: 'Invalid Request' });
