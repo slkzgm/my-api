@@ -14,7 +14,7 @@ const init = async (fullCollection) => {
     ALIEN: 0
   };
   const tasks = [];
-  const actualBlock = await EthLib.getBlockNumber();
+  const actualBlock = await EthLib.getBlockNumber('latest');
 
   fullCollection.forEach(skinvial => {
     if (skinvial && skinvial.dna !== null)

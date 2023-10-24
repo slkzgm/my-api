@@ -51,6 +51,11 @@ const scrapDatas = () => {
             });
             scrap(promises);
           } else {
+            const dir = path.dirname(filePath);
+
+            if (!fs.existsSync(dir)){
+              fs.mkdirSync(dir, { recursive: true }); // { recursive: true } permet de créer des dossiers imbriqués si nécessaire
+            }
             fs.writeFile(filePath, JSON.stringify(fullCollection), () => console.log(`${filename} updated.`));
             console.log('updated');
           }
