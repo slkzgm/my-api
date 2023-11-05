@@ -141,6 +141,12 @@ module.exports = {
 			cwd: "/home/lukas/dunkGenesis-discord-bot"
 		},
 		{
+			name: "eggs-discord-bot",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/eggs-discord-bot"
+		},
+		{
 			name: "weth-auto-withdraw",
 			script: "./index.js",
 			watch: true,
