@@ -2,6 +2,8 @@ const cors = require('cors');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const http = require('http');
+const socketIo = require('socket.io');
 const mintvialsLib = require("./lib/mintvials");
 const mnlthLib = require("./lib/mnlth");
 const slkappzLib = require("./lib/slkappz");
@@ -17,6 +19,7 @@ const claimCheckerLib = require("./lib/claimChecker");
 const clonexeggsLib = require("./lib/clonexeggs");
 const dunkLib = require("./lib/dunk");
 const dunkForgeLib = require("./lib/dunkForge");
+const dunkForgeSse = require('./lib/dunkForgeSse');
 
 const app = express();
 app.use(cors());
@@ -229,6 +232,10 @@ app.post('/blur/airdrop', (req, res) => {
 
 app.get('/stream', (req, res) => {
   sseChannel.addClient(req, res);
+});
+
+app.get('/ws/dunkForge', (req, res) => {
+  dunkForgeSse.addClient(req, res);
 });
 
 const port = 3000;
