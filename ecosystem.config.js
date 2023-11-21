@@ -164,5 +164,11 @@ module.exports = {
 			watch: true,
 			cwd: "/home/lukas/discord-chatbox"
 		},
+		{
+			name: "mintvial-reservoir-discord-bot",
+			script: "./index.js",
+			watch: true,
+			cwd: "/home/lukas/mintvial-reservoir-discord-bot"
+		},
 	]
 }
