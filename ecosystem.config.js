@@ -20,16 +20,16 @@ module.exports = {
 			exec_mode: "fork",
 			cwd: "/home/lukas/my-api"
 		},
-		{
-			name: "eggs-update",
-			script: "./scripts/clonexeggs-database/update.js",
-			watch: "true",
-			autorestart: false,
-			cron_restart: "*/1 * * * *",
-			instances: 1,
-			exec_mode: "fork",
-			cwd: "/home/lukas/my-api"
-		},
+		// {
+		// 	name: "eggs-update",
+		// 	script: "./scripts/clonexeggs-database/update.js",
+		// 	watch: "true",
+		// 	autorestart: false,
+		// 	cron_restart: "*/1 * * * *",
+		// 	instances: 1,
+		// 	exec_mode: "fork",
+		// 	cwd: "/home/lukas/my-api"
+		// },
 		{
 			name: "dunk-forge-update",
 			script: "./scripts/dunk-forge-database/update.js",
@@ -116,18 +116,18 @@ module.exports = {
 		// 	watch: true,
 		// 	cwd: "/home/lukas/MEV"
 		// },
-		{
-			name: "eggs-sniper",
-			script: "./index.js",
-			watch: true,
-			cwd: "/home/lukas/unclaimed-clones-sniper"
-		},
-		{
-			name: "bonusdao",
-			script: "./src/monitor.js",
-			watch: true,
-			cwd: "/home/lukas/bonusdao"
-		},
+		// {
+		// 	name: "eggs-sniper",
+		// 	script: "./index.js",
+		// 	watch: true,
+		// 	cwd: "/home/lukas/unclaimed-clones-sniper"
+		// },
+		// {
+		// 	name: "bonusdao",
+		// 	script: "./src/monitor.js",
+		// 	watch: true,
+		// 	cwd: "/home/lukas/bonusdao"
+		// },
 		{
 			name: "azuki-discord-bot",
 			script: "./index.js",
@@ -146,18 +146,18 @@ module.exports = {
 			watch: true,
 			cwd: "/home/lukas/eggs-discord-bot"
 		},
-		{
-			name: "weth-auto-withdraw",
-			script: "./index.js",
-			watch: true,
-			cwd: "/home/lukas/weth-auto-withdraw"
-		},
-		{
-			name: "rtfkt-stole-link",
-			script: "./index.js",
-			watch: true,
-			cwd: "/home/lukas/rtfkt-link-contract-exploit"
-		},
+		// {
+		// 	name: "weth-auto-withdraw",
+		// 	script: "./index.js",
+		// 	watch: true,
+		// 	cwd: "/home/lukas/weth-auto-withdraw"
+		// },
+		// {
+		// 	name: "rtfkt-stole-link",
+		// 	script: "./index.js",
+		// 	watch: true,
+		// 	cwd: "/home/lukas/rtfkt-link-contract-exploit"
+		// },
 		{
 			name: "discord-chatbox",
 			script: "./index.js",
@@ -169,6 +169,12 @@ module.exports = {
 			script: "./index.js",
 			watch: true,
 			cwd: "/home/lukas/mintvial-reservoir-discord-bot"
+		},
+		{
+			name: "twitch-assistant",
+			script: "./bot.js",
+			watch: true,
+			cwd: "/home/lukas/twitch-chatbot"
 		},
 	]
 }
