@@ -17,7 +17,8 @@ const claimCheckerLib = require("./lib/claimChecker");
 const clonexeggsLib = require("./lib/clonexeggs");
 const dunkLib = require("./lib/dunk");
 const dunkForgeLib = require("./lib/dunkForge");
-const dunkForgeSse = require('./lib/dunkForgeSse');
+const dunkForgeSse = require("./lib/dunkForgeSse");
+const incubationLib = require("./lib/incubation");
 
 const app = express();
 app.use(cors());
@@ -200,6 +201,20 @@ app.get('/dotswoosh/distribution/colors', async (req, res) => {
 
 app.get('/dotswoosh/distribution/logos', async (req, res) => {
   return res.status(200).json(await dotSwooshLib.getLogoDistribution());
+});
+
+app.get('/incubation/eggs/:id', async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).send({ error: 'Bad Request' });
+    }
+    const details = await incubationLib.getEggDetails(req.params.id);
+    console.log(details);
+    return res.status(200).json(await incubationLib.getEggDetails(req.params.id));
+  } catch (e) {
+    console.log(e);
+    return res.status(400).send({ error: 'Invalid Request' });
+  }
 });
 
 app.post('/oncyber/extractor', async (req, res) => {
