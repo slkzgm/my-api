@@ -229,7 +229,7 @@ module.exports = {
 		{
 			name: "cavegame-token",
 			script: "./index.js",
-			watch: true,
+			// watch: true,
 			// autorestart: true,
 			time: true,
 			cwd: "/home/lukas/wgWeb3Token"
@@ -237,7 +237,7 @@ module.exports = {
 		{
 			name: "cavegame-autorun",
 			script: "./index.js",
-			watch: true,
+			// watch: true,
 			autorestart: true,
 			time: true,
 			cwd: "/home/lukas/cavegame-autorun"
