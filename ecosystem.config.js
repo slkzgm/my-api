@@ -89,7 +89,7 @@ module.exports = {
 			name: "mnlth-discord-bot",
 			script: "./index.js",
 			cwd: "/home/lukas/mnlth-discord-bot",
-			autorestart: true,
+			// autorestart: true,
 			time: true,
 			watch: true
 		},
@@ -97,7 +97,7 @@ module.exports = {
 			name: "mintvial-discord-bot",
 			script: "./index.js",
 			cwd: "/home/lukas/mintvial-discord-bot",
-			autorestart: true,
+			// autorestart: true,
 			time: true,
 			watch: true
 		},
@@ -230,7 +230,7 @@ module.exports = {
 			name: "cavegame-token",
 			script: "./index.js",
 			watch: true,
-			autorestart: true,
+			// autorestart: true,
 			time: true,
 			cwd: "/home/lukas/wgWeb3Token"
 		},
