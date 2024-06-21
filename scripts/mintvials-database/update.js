@@ -12,7 +12,8 @@ const getCollectionFloorPrice = async (collectionContract) => (await axios.get(
   `https://api.reservoir.tools/collections/v5?contract=${collectionContract}`,
   {
     headers: {
-      Accept: '*/*'
+      Accept: '*/*',
+      'x-api-key': process.env.RESERVOIR_API_KEY
     }
   }
 )).data.collections[0].floorAsk.price.amount.native;
@@ -21,7 +22,8 @@ const getDnaAttributesStats = async (contractAddress) => (await axios.get(
     `https://api.reservoir.tools/collections/${contractAddress}/attributes/explore/v3?limit=5000`,
     {
       headers: {
-        Accept: '*/*'
+        Accept: '*/*',
+        'x-api-key': process.env.RESERVOIR_API_KEY
       }})
 ).data.attributes.filter(attr => attr.key === 'DNA');
 
