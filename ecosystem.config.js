@@ -23,59 +23,59 @@ module.exports = {
 			cwd: "/home/lukas/my-api"
 		},
 		// {
-		// 	name: "eggs-update",
-		// 	script: "./scripts/clonexeggs-database/update.js",
-		// 	watch: "true",
-		// 	autorestart: false,
-		// 	cron_restart: "*/1 * * * *",
-		//  time: true,
-		// 	instances: 1,
-		// 	exec_mode: "fork",
-		// 	cwd: "/home/lukas/my-api"
+		//      name: "eggs-update",
+		//      script: "./scripts/clonexeggs-database/update.js",
+		//      watch: "true",
+		//      autorestart: false,
+		//      cron_restart: "*/1 * * * *",
+		//      time: true,
+		//      instances: 1,
+		//      exec_mode: "fork",
+		//      cwd: "/home/lukas/my-api"
 		// },
 		// {
-		// 	name: "dunk-forge-update",
-		// 	script: "./scripts/dunk-forge-database/update.js",
-		// 	watch: "true",
-		// 	autorestart: false,
-		//  time: true,
-		// 	cron_restart: "*/1 * * * *",
-		// 	instances: 1,
-		// 	exec_mode: "fork",
-		// 	cwd: "/home/lukas/my-api"
+		//      name: "dunk-forge-update",
+		//      script: "./scripts/dunk-forge-database/update.js",
+		//      watch: "true",
+		//      autorestart: false,
+		//      time: true,
+		//      cron_restart: "*/1 * * * *",
+		//      instances: 1,
+		//      exec_mode: "fork",
+		//      cwd: "/home/lukas/my-api"
 		// },
 		// {
-		// 	name: "cirl-update",
-		// 	script: "./scripts/cirl-database/update.js",
-		// 	watch: "true",
-		// 	autorestart: false,
-		//  time: true,
-		// 	cron_restart: "*/1 * * * *",
-		// 	instances: 1,
-		// 	exec_mode: "fork",
-		// 	cwd: "/home/lukas/my-api"
+		//      name: "cirl-update",
+		//      script: "./scripts/cirl-database/update.js",
+		//      watch: "true",
+		//      autorestart: false,
+		//      time: true,
+		//      cron_restart: "*/1 * * * *",
+		//      instances: 1,
+		//      exec_mode: "fork",
+		//      cwd: "/home/lukas/my-api"
 		// },
 		// {
-		// 	name: "dotSwoosh-update",
-		// 	script: "./scripts/dotswoosh-database/update.js",
-		// 	watch: "true",
-		// 	autorestart: false,
-		// 	time: true,
-		// 	cron_restart: "*/2 * * * *",
-		// 	instances: 1,
-		// 	exec_mode: "fork",
-		// 	cwd: "/home/lukas/my-api"
+		//      name: "dotSwoosh-update",
+		//      script: "./scripts/dotswoosh-database/update.js",
+		//      watch: "true",
+		//      autorestart: false,
+		//      time: true,
+		//      cron_restart: "*/2 * * * *",
+		//      instances: 1,
+		//      exec_mode: "fork",
+		//      cwd: "/home/lukas/my-api"
 		// },
 		// {
-		// 	name: "forgingzsn-update",
-		// 	script: "./scripts/forgingszn/update.js",
-		// 	watch: "true",
-		// 	autorestart: false,
-		// 	cron_restart: "*/3 * * * *",
-		// 	time: true,
-		// 	instances: 1,
-		// 	exec_mode: "fork",
-		// 	cwd: "/home/lukas/my-api"
+		//      name: "forgingzsn-update",
+		//      script: "./scripts/forgingszn/update.js",
+		//      watch: "true",
+		//      autorestart: false,
+		//      cron_restart: "*/3 * * * *",
+		//      time: true,
+		//      instances: 1,
+		//      exec_mode: "fork",
+		//      cwd: "/home/lukas/my-api"
 		// },
 		{
 			name: "api-server",
@@ -121,32 +121,32 @@ module.exports = {
 			cwd: "/home/lukas/rtfktrvl-twitter-bot"
 		},
 		// {
-		// 	name: "dotSwoosh-twitterBot",
-		// 	script: "./index.js",
-		// 	watch: true,
-		// 	autorestart: true,
-		// 	cwd: "/home/lukas/dotSwoosh-twitter-bot"
+		//      name: "dotSwoosh-twitterBot",
+		//      script: "./index.js",
+		//      watch: true,
+		//      autorestart: true,
+		//      cwd: "/home/lukas/dotSwoosh-twitter-bot"
 		// },
 		// {
-		// 	name: "MEV",
-		// 	script: "./stream-api-2.js",
-		// 	watch: true,
-		// 	autorestart: true,
-		// 	cwd: "/home/lukas/MEV"
+		//      name: "MEV",
+		//      script: "./stream-api-2.js",
+		//      watch: true,
+		//      autorestart: true,
+		//      cwd: "/home/lukas/MEV"
 		// },
 		// {
-		// 	name: "eggs-sniper",
-		// 	script: "./index.js",
-		// 	watch: true,
-		// 	autorestart: true,
-		// 	cwd: "/home/lukas/unclaimed-clones-sniper"
+		//      name: "eggs-sniper",
+		//      script: "./index.js",
+		//      watch: true,
+		//      autorestart: true,
+		//      cwd: "/home/lukas/unclaimed-clones-sniper"
 		// },
 		// {
-		// 	name: "bonusdao",
-		// 	script: "./src/monitor.js",
-		// 	watch: true,
-		// 	autorestart: true,
-		// 	cwd: "/home/lukas/bonusdao"
+		//      name: "bonusdao",
+		//      script: "./src/monitor.js",
+		//      watch: true,
+		//      autorestart: true,
+		//      cwd: "/home/lukas/bonusdao"
 		// },
 		{
 			name: "azuki-discord-bot",
@@ -173,18 +173,18 @@ module.exports = {
 			cwd: "/home/lukas/eggs-discord-bot"
 		},
 		// {
-		// 	name: "weth-auto-withdraw",
-		// 	script: "./index.js",
-		// 	watch: true,
-		// 	autorestart: true,
-		// 	cwd: "/home/lukas/weth-auto-withdraw"
+		//      name: "weth-auto-withdraw",
+		//      script: "./index.js",
+		//      watch: true,
+		//      autorestart: true,
+		//      cwd: "/home/lukas/weth-auto-withdraw"
 		// },
 		// {
-		// 	name: "rtfkt-stole-link",
-		// 	script: "./index.js",
-		// 	watch: true,
-		// 	autorestart: true,
-		// 	cwd: "/home/lukas/rtfkt-link-contract-exploit"
+		//      name: "rtfkt-stole-link",
+		//      script: "./index.js",
+		//      watch: true,
+		//      autorestart: true,
+		//      cwd: "/home/lukas/rtfkt-link-contract-exploit"
 		// },
 		{
 			name: "discord-chatbox",
@@ -242,5 +242,13 @@ module.exports = {
 			time: true,
 			cwd: "/home/lukas/cavegame-autorun"
 		},
+		{
+			name: "lesmechants",
+			script: "./server.js",
+			watch: true,
+			autorestart: true,
+			time: true,
+			cwd: "/home/lukas/lesmechants-backend"
+		}
 	]
 }
